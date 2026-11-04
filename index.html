@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bé Xem Hay</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFF8EF; --card:#FFFFFF; --ink:#2B2A33; --muted:#76727F; --line:#EFE6DA;
+  --pri:#FF7A59; --pri-d:#E8613F; --pri-soft:#FFE8DF;
+  --teal:#2BB3A3; --teal-soft:#DDF5F1; --sun:#FFC24B; --night:#3B3F72;
+  --ok:#2E9E5B; --warn:#E8A317; --bad:#D9534F;
+  --r:18px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro',system-ui,sans-serif;font-size:15px;line-height:1.45}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.app{max-width:480px;margin:0 auto;min-height:100vh;padding:0 16px 96px;position:relative}
+h1{font-size:22px;margin:0;font-weight:800;letter-spacing:-.3px}
+h2{font-size:17px;margin:22px 0 10px;font-weight:700}
+.muted{color:var(--muted)} .small{font-size:13px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0 6px}
+.logo{display:flex;gap:8px;align-items:center}
+.logo span{font-size:26px}
+.kids{display:flex;gap:8px;overflow-x:auto;padding:8px 0 4px;scrollbar-width:none}
+.kid{flex:none;padding:8px 14px;border-radius:999px;background:var(--card);border:1.5px solid var(--line);font-weight:600}
+.kid.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card{background:var(--card);border-radius:var(--r);padding:16px;border:1px solid var(--line);margin-top:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 12px;border-radius:999px;background:#F6F1EA;font-weight:500;font-size:14px;border:1.5px solid transparent}
+.chip.on{background:var(--pri-soft);border-color:var(--pri);color:var(--pri-d);font-weight:600}
+.row{display:flex;gap:10px;align-items:center}
+.between{justify-content:space-between}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;border-radius:16px;background:var(--pri);color:#fff;font-weight:700;font-size:17px;box-shadow:0 6px 0 var(--pri-d);margin-top:14px}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 var(--pri-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.lbl{font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.4px}
+select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:#fff;width:100%}
+.vid{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.vid:first-child{border-top:0}
+.thumb{flex:none;width:118px;aspect-ratio:16/9;border-radius:10px;background:#eee center/cover;position:relative}
+.thumb b{position:absolute;right:5px;bottom:5px;background:rgba(0,0,0,.75);color:#fff;font-size:11px;padding:1px 5px;border-radius:5px;font-weight:600}
+.vt{font-weight:600;font-size:14px;line-height:1.3}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.tag{font-size:11px;padding:2px 7px;border-radius:6px;background:#F3EEE7;color:#5b5766;font-weight:500}
+.tag.g{background:#E3F4E9;color:var(--ok)} .tag.t{background:var(--teal-soft);color:#16877a}
+.vact{display:flex;gap:6px;margin-top:6px}
+.mini{font-size:12px;padding:4px 9px;border-radius:8px;background:#F6F1EA;font-weight:600}
+.mini.red{color:var(--bad)}
+.notice{background:var(--teal-soft);border-radius:14px;padding:12px 14px;font-size:14px}
+.warnbox{background:#FFF3D6;border-radius:var(--r);padding:18px;margin-top:12px}
+.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);z-index:5}
+.nav .in{max-width:480px;margin:0 auto;display:flex;padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+.nav button{flex:1;padding:6px 0;font-size:11px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+.nav button i{font-style:normal;font-size:22px}
+.nav button.on{color:var(--pri-d)}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat div{background:#F8F4EE;border-radius:14px;padding:12px 8px;text-align:center}
+.stat b{display:block;font-size:22px;font-weight:800}
+.bar{height:10px;border-radius:6px;background:#F1EBE3;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.hbar{display:grid;grid-template-columns:130px 1fr 44px;gap:8px;align-items:center;font-size:13px;margin:7px 0}
+.hide{display:none!important}
+
+/* ===== Kid mode ===== */
+.kidmode{position:fixed;inset:0;background:#1d1b2b;z-index:20;display:flex;flex-direction:column}
+.sky{height:64px;position:relative;background:linear-gradient(90deg,#8fd3ff,#ffd59a 70%,#6b6fb5);transition:filter 1s;flex:none}
+.sky .track{position:absolute;left:56px;right:56px;top:30px;height:6px;border-radius:4px;background:rgba(255,255,255,.55)}
+.sky .fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:#fff}
+.sky .sunico{position:absolute;top:-17px;font-size:34px;transform:translateX(-50%);transition:left 1s linear}
+.sky .home{position:absolute;right:14px;top:14px;font-size:30px}
+.sky .from{position:absolute;left:14px;top:14px;font-size:30px}
+.stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
+#ytwrap{width:100%;height:100%}
+#ytwrap iframe{width:100%;height:100%}
+.shield{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center}
+.bigplay{font-size:84px;background:rgba(255,255,255,.9);width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast{position:absolute;left:50%;top:18px;transform:translateX(-50%);background:#fff;border-radius:22px;padding:12px 18px;font-weight:700;font-size:20px;display:flex;gap:10px;align-items:center;z-index:3;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:pop .4s ease}
+.toast span{font-size:40px}
+@keyframes pop{from{transform:translate(-50%,-20px) scale(.8);opacity:0}}
+.lastchip{position:absolute;left:14px;bottom:14px;z-index:3;background:var(--sun);color:#3a2a00;font-weight:800;padding:8px 14px;border-radius:999px;font-size:16px}
+.parentexit{position:absolute;right:10px;bottom:10px;z-index:3;font-size:12px;color:rgba(255,255,255,.55);padding:8px}
+
+.full{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.bye{background:linear-gradient(180deg,#3B3F72,#6b5ea8 60%,#f2a679)}
+.bye h1{color:#fff;font-size:34px;margin-top:10px}
+.bye p{color:#fff;opacity:.9;font-size:20px;margin:8px 0 0}
+.bear{font-size:120px;animation:sway 2.4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(-8deg) translateY(6px)}}
+.nextcard{background:#fff;border-radius:24px;padding:16px 26px;margin-top:22px;font-size:24px;font-weight:800;display:flex;gap:12px;align-items:center}
+.nextcard span{font-size:44px}
+.star{margin-top:28px;width:150px;height:150px;border-radius:50%;background:var(--sun);font-size:70px;box-shadow:0 10px 0 #d99a1d,0 0 0 10px rgba(255,255,255,.25);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{box-shadow:0 10px 0 #d99a1d,0 0 0 22px rgba(255,255,255,.1)}}
+.star+small{color:#fff;margin-top:14px;font-size:16px;font-weight:600}
+.lock{background:var(--bg)}
+.lock .ic{font-size:80px}
+.gate{margin-top:22px;background:#fff;border-radius:20px;padding:18px;width:100%;max-width:340px;border:1px solid var(--line)}
+.gate input{text-align:center;font-size:24px;font-weight:700;margin-top:10px}
+.rate{background:var(--bg)}
+.faces{display:flex;gap:14px;margin-top:22px}
+.faces button{width:92px;height:104px;border-radius:22px;background:#fff;border:1.5px solid var(--line);font-size:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.faces button small{font-size:12px;font-weight:600;color:var(--muted)}
+.faces button:active{transform:scale(.94)}
+.skip{margin-top:18px;color:var(--muted);font-size:14px;text-decoration:underline}
+.thanks .big{font-size:60px}
+.askbox{background:#fff;border-radius:18px;padding:14px 16px;border:1px solid var(--line);margin-top:16px;text-align:left;max-width:380px}
+.blocked18{text-align:center}
+.blocked18 .ic{font-size:58px}
+.rec{display:flex;gap:8px}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<nav class="nav" id="nav"><div class="in">
+  <button data-tab="home"><i>🏠</i>Buổi xem</button>
+  <button data-tab="lib"><i>📚</i>Thư viện</button>
+  <button data-tab="report"><i>📊</i>Báo cáo</button>
+  <button data-tab="settings"><i>⚙️</i>Cài đặt</button>
+</div></nav>
+<div id="overlay"></div>
+
+<script src="data.js"></script>
+<script>
+/* ---------- Danh mục ---------- */
+const CATS={en:'🔤 Tiếng Anh',math:'🔢 Toán & tư duy',explore:'🔭 Khám phá',feel:'💛 Cảm xúc & tính cách',habit:'🪥 Thói quen & tự lập',move:'🤸 Vận động',story:'📚 Truyện & sáng tạo'};
+const SITS={gian:'😤 Hay cáu, ăn vạ',coem:'👶 Sắp có em / ghen với em',dihoc:'🎒 Sợ đi học',bacsi:'💉 Sắp đi khám, đi tiêm',bo:'🚽 Cai bỉm',danhrang:'🪥 Lười đánh răng',dondo:'🧸 Không chịu dọn đồ',ngu:'🌙 Trước giờ ngủ'};
+const NEXTS={tam:['🛁','Giờ mình đi tắm nhé!','Đi tắm'],an:['🍚','Giờ mình ăn cơm nhé!','Ăn cơm'],ngu:['🛏️','Giờ mình đi ngủ nhé!','Đi ngủ'],xep:['🧩','Ra chơi xếp hình nào!','Xếp hình'],ngoai:['🌳','Ra ngoài chơi nào!','Ra ngoài chơi'],doc:['📖','Đọc sách cùng bố mẹ nhé!','Đọc sách']};
+const V=window.VIDEOS, byId=Object.fromEntries(V.map(v=>[v.id,v]));
+
+/* ---------- Lưu dữ liệu ---------- */
+const KEY='bexemhay_v1';
+function defState(){return{
+  kids:[{id:'k1',name:'Bé lớn',months:36,goals:['en','feel','habit'],minutes:20,next:'tam'},
+        {id:'k2',name:'Bé nhỏ',months:10,goals:['en'],minutes:15,next:'ngu'}],
+  active:'k1',sessions:[],blocked:[],voice:{}}}
+let S; try{S=JSON.parse(localStorage.getItem(KEY))||defState()}catch(e){S=defState()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const kid=()=>S.kids.find(k=>k.id===S.active)||S.kids[0];
+const years=k=>k.months/12;
+const fmt=s=>{s=Math.round(s);const m=Math.floor(s/60);return m+':'+String(s%60).padStart(2,'0')};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- Gửi đánh giá về Google Sheet chung ---------- */
+const API=''; // URL ứng dụng web Apps Script
+let DEVICE; try{DEVICE=localStorage.getItem('bexemhay_dev')||('m'+Math.random().toString(36).slice(2,8));localStorage.setItem('bexemhay_dev',DEVICE)}catch(e){DEVICE='m'+Math.random().toString(36).slice(2,8)}
+function send(obj){if(!API)return Promise.resolve(false);obj.device=DEVICE;obj.months=kid().months;
+  return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(obj)}).then(()=>true).catch(()=>false)}
+let G=null; // điểm gom từ mọi bố mẹ
+function loadGlobal(){if(!API)return;fetch(API+'?action=scores').then(r=>r.json()).then(j=>{if(j&&j.ok){G=j;render()}}).catch(()=>{})}
+
+/* ---------- Điểm video từ đánh giá của bố mẹ ---------- */
+function scores(){
+  if(G&&G.videos)return G.videos;
+  const sc={};
+  for(const s of S.sessions){
+    for(const id of s.videos){
+      const o=sc[id]||(sc[id]={n:0,good:0,bad:0,imit:0});
+      if(s.mood){o.n++; if(s.mood==='vui')o.good++; if(s.mood==='anvai')o.bad++;}
+      if(s.imitate==='yes')o.imit++;
+    }
+  }
+  return sc;
+}
+
+/* ---------- Xếp danh sách buổi xem ---------- */
+let situation=null, plan=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function eligible(k){
+  const y=years(k);
+  return V.filter(v=>y>=v.age[0]-0.01&&y<=v.age[1]+1&&!S.blocked.includes(v.id)&&!(y<4&&v.pace==='nhanh'));
+}
+function recentIds(k,n=3){return S.sessions.filter(s=>s.kid===k.id).slice(-n).flatMap(s=>s.videos)}
+function rank(list,k){
+  const sc=scores(),rec=recentIds(k);
+  return shuffle(list.slice()).sort((a,b)=>val(b)-val(a));
+  function val(v){const o=sc[v.id];let x=0;if(o&&o.n)x+=(o.good-o.bad*1.5)/o.n;if(rec.includes(v.id))x-=1.2;if(v.inter&&years(k)<4)x+=.3;return x}
+}
+function buildPlan(k){
+  const limit=k.minutes*60, pool=eligible(k), out=[];let total=0;
+  const used=new Set();
+  const take=(arr)=>{for(const v of arr){if(used.has(v.id))continue;if(out.length&&total+v.dur>limit+45)continue;used.add(v.id);out.push(v);total+=v.dur;return v}return null};
+  if(situation){
+    take(rank(pool.filter(v=>v.sit.includes(situation)),k));
+    take(rank(pool.filter(v=>v.sit.includes(situation)),k));
+  }
+  const goals=k.goals.length?k.goals:['en'];
+  let gi=0,guard=0;
+  // nhịp: học → vận động → học → ... → dịu lại ở cuối
+  while(total<limit-100&&guard++<20){
+    if(out.length%3===1) {if(take(rank(pool.filter(v=>v.cat.includes('move')),k)))continue}
+    const g=goals[gi++%goals.length];
+    if(!take(rank(pool.filter(v=>v.cat.includes(g)&&!(v.cat.includes('move'))),k))) if(!take(rank(pool,k)))break;
+  }
+  // video cuối: nhịp chậm, dịu
+  const last=out[out.length-1];
+  if(last&&(last.pace!=='cham'||last.cat.includes('move'))){
+    const calm=rank(pool.filter(v=>v.pace==='cham'&&!v.cat.includes('move')&&(v.cat.includes('feel')||v.cat.includes('story'))&&!used.has(v.id)),k);
+    const c=calm.find(v=>total-last.dur+v.dur<=limit+60);
+    if(c){out[out.length-1]=c}
+  }
+  return out;
+}
+function planTotal(){return plan.reduce((a,v)=>a+v.dur,0)}
+
+/* ---------- Giao diện bố mẹ ---------- */
+let tab='home', libCat='all', showPlan=false;
+const $=s=>document.querySelector(s);
+function render(){
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===tab));
+  $('#app').innerHTML=header()+({home:homeView,lib:libView,report:reportView,settings:settingsView}[tab])();
+}
+function header(){
+  return `<div class="top"><div class="logo"><span>🌈</span><h1>Bé Xem Hay</h1></div><span class="small muted">Bản thử</span></div>
+  <div class="kids">${S.kids.map(k=>`<button class="kid ${k.id===S.active?'on':''}" onclick="pickKid('${k.id}')">${esc(k.name)} · ${ageText(k)}</button>`).join('')}
+  <button class="kid" onclick="addKid()">＋ Thêm bé</button></div>`;
+}
+function ageText(k){return k.months<24?k.months+' tháng':Math.floor(k.months/12)+' tuổi'}
+function pickKid(id){S.active=id;save();plan=[];showPlan=false;situation=null;render()}
+function addKid(){const name=prompt('Tên gọi của bé?');if(!name)return;const m=parseInt(prompt('Bé bao nhiêu tháng tuổi? (ví dụ 3 tuổi = 36)'),10);if(!m)return;
+  const k={id:'k'+Date.now(),name,months:m,goals:['en','feel'],minutes:20,next:'tam'};S.kids.push(k);S.active=k.id;save();render()}
+
+function homeView(){
+  const k=kid();
+  if(k.months<18) return `<div class="warnbox blocked18"><div class="ic">👶</div><h2 style="margin-top:6px">${esc(k.name)} chưa nên xem video</h2>
+    <p>Hội Nhi khoa Mỹ và WHO khuyên trẻ dưới 18 tháng <b>không xem màn hình</b>, trừ gọi video với người thân.</p>
+    <p class="small muted" style="text-align:left">Thay vào đó bố mẹ thử:<br>• Gọi video với ông bà<br>• Đọc sách tranh, chỉ và gọi tên con vật<br>• Chơi ú òa, hát và vỗ tay cùng con</p>
+    <p class="small muted">App sẽ tự mở khi bé đủ 18 tháng.</p></div>`;
+  if(!plan.length) plan=buildPlan(k);
+  const [ni,nt]=NEXTS[k.next];
+  return `
+  <div class="card">
+    <div class="lbl" style="margin-top:0">Hôm nay con xem bao lâu?</div>
+    <div class="chips">${[10,15,20,30].map(m=>`<button class="chip ${k.minutes===m?'on':''}" onclick="setMin(${m})">${m} phút</button>`).join('')}</div>
+    <div class="lbl">Xem xong con làm gì?</div>
+    <div class="chips">${Object.entries(NEXTS).map(([key,[i,,s]])=>`<button class="chip ${k.next===key?'on':''}" onclick="setNext('${key}')">${i} ${s}</button>`).join('')}</div>
+    <div class="lbl">Mục tiêu của con <a class="small" style="color:var(--pri-d);text-transform:none;font-weight:600" href="#" onclick="tab='settings';render();return false">sửa</a></div>
+    <div class="chips">${k.goals.map(g=>`<span class="chip on">${CATS[g]}</span>`).join('')}</div>
+  </div>
+  <h2>Con đang gặp chuyện gì? <span class="small muted" style="font-weight:500">(không bắt buộc)</span></h2>
+  <div class="chips">${Object.entries(SITS).map(([key,t])=>`<button class="chip ${situation===key?'on':''}" onclick="setSit('${key}')">${t}</button>`).join('')}</div>
+  <div class="card">
+    <div class="row between"><b>Danh sách buổi này · ${plan.length} video · ${Math.round(planTotal()/60)} phút</b>
+      <button class="mini" onclick="plan=buildPlan(kid());render()">🔀 Đổi</button></div>
+    <p class="small muted" style="margin:4px 0 8px">Học → vận động → học → kết thúc bằng video nhịp chậm cho con dịu lại.</p>
+    ${plan.map((v,i)=>vidRow(v,true,i)).join('')}
+  </div>
+  <button class="btn" onclick="startKid()">▶ Bắt đầu cho ${esc(k.name)} xem</button>
+  <p class="small muted" style="text-align:center;margin-top:12px">Mẹo: bật “Truy cập được hướng dẫn” (iPhone) hoặc “Ghim màn hình” (Android) để con không thoát ra app khác.</p>
+  <p class="small" style="text-align:center"><a href="#" style="color:var(--pri-d);font-weight:600" onclick="tab='settings';render();setTimeout(()=>$('#fbcard').scrollIntoView({behavior:'smooth'}),50);return false">💬 Góp ý cho app</a></p>`;
+}
+function vidRow(v,inPlan,i){
+  const sc=scores()[v.id];
+  const pct=sc&&sc.n?Math.round(sc.good/sc.n*100):null;
+  return `<div class="vid"><div class="thumb" style="background-image:url(https://i.ytimg.com/vi/${v.id}/mqdefault.jpg)"><b>${fmt(v.dur)}</b></div>
+  <div style="min-width:0"><div class="vt">${esc(v.t)}</div><div class="small muted">${esc(v.ch)}</div>
+  <div class="tags"><span class="tag g">🟢 Khuyên xem</span><span class="tag">${v.age[0]}–${v.age[1]} tuổi</span><span class="tag">${v.pace==='cham'?'🐢 Nhịp chậm':'🚶 Nhịp vừa'}</span>${v.inter?'<span class="tag t">🙋 Hỏi – chờ con trả lời</span>':''}${pct!==null?`<span class="tag t">😊 ${pct}% tắt máy vui vẻ (${sc.n})</span>`:''}</div>
+  ${inPlan?`<div class="vact"><button class="mini" onclick="swapVid(${i})">Đổi video khác</button><button class="mini red" onclick="blockVid('${v.id}')">🚫 Chặn</button></div>`:''}
+  </div></div>`;
+}
+function setMin(m){kid().minutes=m;save();plan=buildPlan(kid());render()}
+function setNext(n){kid().next=n;save();render()}
+function setSit(s){situation=situation===s?null:s;plan=buildPlan(kid());render()}
+function swapVid(i){const k=kid(),cur=plan[i];const ids=plan.map(v=>v.id);
+  const cand=rank(eligible(k).filter(v=>!ids.includes(v.id)&&v.cat.some(c=>cur.cat.includes(c))),k);
+  if(cand[0]){plan[i]=cand[0];render()}}
+function blockVid(id){if(!confirm('Chặn video này? Con sẽ không được xem nữa.'))return;S.blocked.push(id);save();send({type:'block',id,title:(byId[id]||{}).t});plan=plan.filter(v=>v.id!==id);render()}
+
+function libView(){
+  const k=kid(); const list=V.filter(v=>libCat==='all'||v.cat.includes(libCat)||v.sit.includes(libCat));
+  return `<h2>Thư viện đã duyệt · ${V.length} video</h2>
+  <p class="small muted" style="margin-top:-4px">Mỗi video đều có người lớn chấm: tuổi, nhịp phim, có tương tác không. Điểm “tắt máy vui vẻ” lấy từ đánh giá của bố mẹ.</p>
+  <div class="chips"><button class="chip ${libCat==='all'?'on':''}" onclick="libCat='all';render()">Tất cả</button>
+  ${Object.entries(CATS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
+  <div class="lbl">Theo tình huống</div>
+  <div class="chips">${Object.entries(SITS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
+  <div class="card">${list.map(v=>vidRow(v,false)+`<div class="small" style="margin:-4px 0 8px 130px;color:#16877a">💬 ${esc(v.ask)}</div>`).join('')||'<p class="muted">Chưa có video.</p>'}</div>
+  ${S.blocked.length?`<p class="small muted">Đã chặn ${S.blocked.length} video. <a href="#" onclick="S.blocked=[];save();render();return false">Bỏ chặn tất cả</a></p>`:''}`;
+}
+
+function weekSessions(k){const t=Date.now()-7*864e5;return S.sessions.filter(s=>s.kid===k.id&&s.at>t)}
+function reportView(){
+  const k=kid(), ws=weekSessions(k);
+  const rated=ws.filter(s=>s.mood), happy=rated.filter(s=>s.mood==='vui').length, mid=rated.filter(s=>s.mood==='tiec').length, bad=rated.filter(s=>s.mood==='anvai').length;
+  const mins=Math.round(ws.reduce((a,s)=>a+s.watched,0)/60);
+  const catSec={};ws.forEach(s=>s.videos.forEach(id=>{const v=byId[id];if(v)v.cat.forEach(c=>catSec[c]=(catSec[c]||0)+v.dur/v.cat.length)}));
+  const maxC=Math.max(1,...Object.values(catSec));
+  const sc=scores(); const top=Object.entries(sc).filter(([,o])=>o.n).sort((a,b)=>(b[1].good-b[1].bad)/b[1].n-(a[1].good-a[1].bad)/a[1].n).slice(0,5);
+  return `<h2>Tuần này của ${esc(k.name)}</h2>
+  <div class="stat"><div><b>${ws.length}</b><span class="small muted">buổi xem</span></div><div><b>${mins}</b><span class="small muted">phút</span></div><div><b>${rated.length?happy+'/'+rated.length:'–'}</b><span class="small muted">lần tắt vui vẻ</span></div></div>
+  <div class="card"><b>Lúc tắt máy, con thế nào?</b>
+    ${rated.length?`<div class="bar" style="margin:10px 0 6px"><i style="width:${happy/rated.length*100}%;background:var(--ok)"></i><i style="width:${mid/rated.length*100}%;background:var(--warn)"></i><i style="width:${bad/rated.length*100}%;background:var(--bad)"></i></div>
+    <div class="small row between"><span>😊 Vui vẻ ${happy}</span><span>😐 Hơi tiếc ${mid}</span><span>😫 Ăn vạ ${bad}</span></div>`:'<p class="small muted">Chưa có đánh giá. Sau mỗi buổi xem, chạm 1 lần là xong.</p>'}
+  </div>
+  <div class="card"><b>Con đã xem gì</b>
+    ${Object.keys(catSec).length?Object.entries(CATS).filter(([c])=>catSec[c]).map(([c,t])=>`<div class="hbar"><span>${t}</span><div class="bar"><i style="width:${catSec[c]/maxC*100}%;background:var(--pri)"></i></div><span class="small muted">${Math.round(catSec[c]/60)}p</span></div>`).join(''):'<p class="small muted">Chưa có buổi xem nào.</p>'}
+  </div>
+  ${top.length?`<div class="card"><b>Video con tắt máy vui vẻ nhất</b>${top.map(([id,o])=>byId[id]?vidRow(byId[id],false):'').join('')}</div>`:''}
+  <div class="card"><b>Các buổi gần đây</b>
+  ${S.sessions.filter(s=>s.kid===k.id).slice(-8).reverse().map(s=>`<div class="row between small" style="padding:7px 0;border-top:1px solid var(--line)"><span>${new Date(s.at).toLocaleString('vi-VN',{weekday:'short',hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})}</span><span>${s.videos.length} video · ${Math.round(s.watched/60)}p</span><span style="font-size:18px">${{vui:'😊',tiec:'😐',anvai:'😫'}[s.mood]||'–'}</span></div>`).join('')||'<p class="small muted">Chưa có.</p>'}
+  </div>`;
+}
+
+function settingsView(){
+  const k=kid();
+  return `<h2>Hồ sơ của bé</h2><div class="card">
+   <div class="lbl" style="margin-top:0">Tên gọi</div><input value="${esc(k.name)}" onchange="kid().name=this.value;save();render()">
+   <div class="lbl">Tuổi (tháng)</div><input type="number" value="${k.months}" onchange="kid().months=+this.value;save();plan=[];render()">
+   <div class="lbl">Mục tiêu (chọn 1–3)</div>
+   <div class="chips">${Object.entries(CATS).map(([c,t])=>`<button class="chip ${k.goals.includes(c)?'on':''}" onclick="toggleGoal('${c}')">${t}</button>`).join('')}</div>
+  </div>
+  <h2>Giọng bố mẹ lúc tạm biệt</h2><div class="card">
+   <p class="small muted" style="margin-top:0">Ghi âm một câu ngắn, ví dụ: “${esc(k.name)} ơi, hết giờ rồi, bố đợi con đi tắm nhé!”. Lúc hết giờ app sẽ phát giọng của anh/chị thay cho giọng máy.</p>
+   <div class="rec"><button class="mini" id="recbtn" onclick="recVoice()">🎙️ ${S.voice[k.id]?'Ghi lại':'Bắt đầu ghi âm'}</button>${S.voice[k.id]?`<button class="mini" onclick="new Audio(S.voice[kid().id]).play()">▶ Nghe thử</button><button class="mini red" onclick="delete S.voice[kid().id];save();render()">Xoá</button>`:''}</div>
+  </div>
+  ${feedbackCard()}
+  <h2>Về bản thử</h2><div class="notice">Đây là bản dùng thử. Mỗi lần anh/chị chạm 😊 😐 😫 sau buổi xem, kết quả được gộp với các bố mẹ khác (không gửi tên hay ảnh của bé, chỉ gửi tuổi theo tháng) để xếp video tốt lên trước.</div>
+  <button class="btn ghost" onclick="if(confirm('Xoá toàn bộ lịch sử và đánh giá?')){S=defState();save();plan=[];render()}">Xoá dữ liệu thử</button>`;
+}
+function feedbackCard(){
+  return `<h2>Góp ý cho app</h2><div class="card" id="fbcard">
+   <p class="small muted" style="margin-top:0">Chỗ nào khó dùng, video nào không hợp, muốn thêm mục gì… anh/chị cứ viết, vài chữ cũng được.</p>
+   <textarea id="fbtext" rows="4" style="font:inherit;width:100%;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line)" placeholder="Ví dụ: con thích bài Hello, muốn có thêm truyện tiếng Việt"></textarea>
+   <input id="fbcontact" style="margin-top:8px" placeholder="Số Zalo hoặc tên (không bắt buộc)">
+   <button class="btn" style="margin-top:12px" onclick="sendFb()">Gửi góp ý</button></div>`;
+}
+function sendFb(){const t=$('#fbtext').value.trim();if(!t){$('#fbtext').focus();return}
+  send({type:'feedback',text:t,contact:$('#fbcontact').value.trim()}).then(ok=>{$('#fbcard').innerHTML=ok?'<b>✅ Đã gửi. Cảm ơn anh/chị nhiều!</b>':'<b>Chưa gửi được, anh/chị kiểm tra mạng rồi thử lại nhé.</b>'})}
+function toggleGoal(c){const k=kid();if(k.goals.includes(c))k.goals=k.goals.filter(x=>x!==c);else{if(k.goals.length>=3)k.goals.shift();k.goals.push(c)}save();plan=[];render()}
+let rec=null;
+async function recVoice(){
+  const b=$('#recbtn');
+  if(rec&&rec.state==='recording'){rec.stop();return}
+  try{const st=await navigator.mediaDevices.getUserMedia({audio:true});rec=new MediaRecorder(st);const ch=[];
+    rec.ondataavailable=e=>ch.push(e.data);
+    rec.onstop=()=>{st.getTracks().forEach(t=>t.stop());const fr=new FileReader();fr.onload=()=>{S.voice[kid().id]=fr.result;save();render()};fr.readAsDataURL(new Blob(ch,{type:rec.mimeType}))};
+    rec.start();b.textContent='⏹ Dừng ghi (tối đa 10 giây)';setTimeout(()=>rec&&rec.state==='recording'&&rec.stop(),10000);
+  }catch(e){alert('Không mở được micro: '+e.message)}
+}
+
+/* ---------- Chế độ cho con xem ---------- */
+let player=null, ytReady=false, idx=0, played=0, lastTick=0, timer=null, warned5=false, warned2=false, limit=0, isLast=false, finishing=false;
+window.onYouTubeIframeAPIReady=()=>{ytReady=true};
+(function(){const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s)})();
+
+function startKid(){
+  if(!plan.length)return;
+  if(!ytReady){alert('Đang tải trình phát, thử lại sau vài giây nhé.');return}
+  const k=kid(); limit=k.minutes*60; idx=0; played=0; warned5=warned2=false; isLast=false; finishing=false;
+  $('#overlay').innerHTML=`<div class="kidmode" id="km">
+    <div class="sky" id="sky"><span class="from">🌤️</span><div class="track"><div class="fill" id="fill" style="width:0"></div><span class="sunico" id="sunico" style="left:0">☀️</span></div><span class="home">${NEXTS[k.next][0]}</span></div>
+    <div class="stage"><div id="ytwrap"><div id="yt"></div></div>
+      <div class="shield" id="shield" onclick="togglePause()"><div class="bigplay" id="bigplay">▶️</div></div>
+      <div id="toastbox"></div><div class="lastchip hide" id="lastchip">⭐ Video cuối cùng</div>
+      <button class="parentexit" onclick="event.stopPropagation();parentExit()">Bố mẹ dừng</button>
+    </div></div>`;
+  try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}catch(e){}
+  player=new YT.Player('yt',{host:'https://www.youtube-nocookie.com',videoId:plan[0].id,
+    playerVars:{controls:0,rel:0,modestbranding:1,disablekb:1,fs:0,playsinline:1,iv_load_policy:3,autoplay:1},
+    events:{onStateChange:onState,onReady:e=>{e.target.playVideo()}}});
+  lastTick=Date.now(); timer=setInterval(tick,500);
+  markLast();
+}
+function onState(e){
+  const bp=$('#bigplay'); if(!bp)return;
+  if(e.data===YT.PlayerState.PLAYING){bp.parentElement.style.background='transparent';bp.style.display='none'}
+  else if(e.data===YT.PlayerState.PAUSED){bp.style.display='flex';bp.textContent='▶️'}
+  else if(e.data===YT.PlayerState.ENDED){nextVideo()}
+}
+function togglePause(){if(!player||!player.getPlayerState)return;const st=player.getPlayerState();
+  if(st===YT.PlayerState.PLAYING)player.pauseVideo();else player.playVideo()}
+function tick(){
+  const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
+  if(player&&player.getPlayerState&&player.getPlayerState()===YT.PlayerState.PLAYING)played+=dt;
+  const p=Math.min(1,played/limit);
+  const f=$('#fill'),s=$('#sunico');if(f){f.style.width=p*100+'%';s.style.left=p*100+'%';s.textContent=p>.85?'🌇':p>.6?'🌤️':'☀️';$('#sky').style.filter=`saturate(${1-p*.5}) brightness(${1-p*.25})`}
+  const left=limit-played;
+  if(!warned5&&limit>360&&left<=300){warned5=true;toast('🐻','Sắp hết giờ rồi nhé!');say('Sắp hết giờ rồi nhé!')}
+  if(!warned2&&left<=120){warned2=true;toast('🦉','Còn một chút nữa thôi!');say('Còn một chút nữa thôi')}
+  if(left<=0&&!isLast){isLast=true;plan=plan.slice(0,idx+1);markLast()}
+}
+function markLast(){const c=$('#lastchip');if(!c)return;const last=idx===plan.length-1;c.classList.toggle('hide',!last);
+  if(last&&!finishing){finishing=true;if(idx>0){toast('⭐','Video cuối cùng!');say('Video cuối cùng nhé')}}}
+function nextVideo(){
+  idx++;
+  if(idx>=plan.length||played>=limit){endSession();return}
+  player.loadVideoById(plan[idx].id);markLast();
+}
+function toast(ic,t){const b=$('#toastbox');if(!b)return;b.innerHTML=`<div class="toast"><span>${ic}</span>${t}</div>`;setTimeout(()=>{if(b)b.innerHTML=''},4500)}
+function viVoice(){return speechSynthesis.getVoices().find(v=>/^vi/i.test(v.lang))}
+function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='vi-VN';const v=viVoice();if(v)u.voice=v;u.rate=.92;u.pitch=1.15;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function chime(){try{const a=new (window.AudioContext||window.webkitAudioContext)();[523,659,784,659,523,392,523].forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=f;o.connect(g);g.connect(a.destination);const t=a.currentTime+i*.32;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.04);g.gain.exponentialRampToValueAtTime(.001,t+.3);o.start(t);o.stop(t+.32)})}catch(e){}}
+
+let session=null;
+function cleanupPlayer(){clearInterval(timer);try{player&&player.destroy()}catch(e){}player=null}
+function parentExit(){if(!confirm('Dừng buổi xem bây giờ?'))return;endSession()}
+function endSession(){
+  const k=kid(); cleanupPlayer();
+  session={kid:k.id,at:Date.now(),videos:plan.slice(0,Math.min(idx+1,plan.length)).map(v=>v.id),watched:played,mood:null,imitate:null};
+  const [ni,nt]=NEXTS[k.next];
+  $('#overlay').innerHTML=`<div class="full bye"><div class="bear">🐻</div><h1>Tạm biệt ${esc(k.name)}!</h1><p>Hẹn gặp lại ngày mai nhé</p>
+    <div class="nextcard"><span>${ni}</span>${nt}</div>
+    <button class="star" onclick="kidOff()">⭐</button><small>Con bấm ngôi sao để tắt nhé!</small></div>`;
+  chime();
+  setTimeout(()=>{if(S.voice[k.id]){new Audio(S.voice[k.id]).play().catch(()=>{})}else say(`Hết giờ rồi. Tạm biệt ${k.name}. ${nt}`)},2400);
+}
+function kidOff(){
+  speechSynthesis.cancel();
+  try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
+  const a=2+(Math.random()*7|0),b=3+(Math.random()*6|0);
+  window._gate=a+b;
+  $('#overlay').innerHTML=`<div class="full lock"><div class="ic">🔒</div><h1>Con đưa máy cho bố mẹ nhé</h1>
+   <div class="gate"><b>Dành cho bố mẹ</b><div class="small muted">${a} + ${b} bằng mấy?</div>
+   <input type="number" inputmode="numeric" id="gatein" oninput="if(+this.value===window._gate)afterGate()"></div></div>`;
+}
+function afterGate(){
+  const n=S.sessions.length+1, alt=n%5===0;
+  $('#overlay').innerHTML=`<div class="full rate">${alt?`
+    <h1>Con có nhắc lại gì từ video không?</h1><p class="muted">Một từ tiếng Anh, một câu hát, một hành động…</p>
+    <div class="faces"><button onclick="rate(null,'yes')">👍<small>Có</small></button><button onclick="rate(null,'no')">👎<small>Chưa</small></button></div>`:`
+    <h1>Lúc tắt, con thế nào?</h1>
+    <div class="faces"><button onclick="rate('vui')">😊<small>Vui vẻ</small></button><button onclick="rate('tiec')">😐<small>Hơi tiếc</small></button><button onclick="rate('anvai')">😫<small>Ăn vạ</small></button></div>`}
+    <button class="skip" onclick="rate(null,null)">Bỏ qua</button></div>`;
+}
+function rate(mood,imit){
+  session.mood=mood;session.imitate=imit||null;S.sessions.push(session);save();
+  send({type:'session',videos:session.videos,watched:session.watched,mood,imitate:imit||null,minutes:kid().minutes,situation:situation||''}).then(()=>setTimeout(loadGlobal,1500));
+  if(G&&G.videos&&mood){session.videos.forEach(id=>{const o=G.videos[id]||(G.videos[id]={n:0,good:0,bad:0,imit:0});o.n++;if(mood==='vui')o.good++;if(mood==='anvai')o.bad++})}
+  const k=kid(),ws=weekSessions(k).filter(s=>s.mood),h=ws.filter(s=>s.mood==='vui').length;
+  const v=byId[session.videos[0]];
+  const line=mood==='vui'?`Tuyệt! Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần 🎉`:mood==='anvai'?`Không sao, lần sau app sẽ đổi sang video nhịp chậm hơn ở cuối buổi.`:ws.length?`Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần.`:'Cảm ơn anh/chị!';
+  $('#overlay').innerHTML=`<div class="full rate thanks"><div class="big">${mood==='anvai'?'🤗':'🎉'}</div><h1 style="font-size:20px;max-width:340px">${line}</h1>
+   ${v?`<div class="askbox"><div class="small muted">Hôm nay con xem “${esc(v.t)}”</div><b>💬 ${esc(v.ask)}</b></div>`:''}
+   <button class="btn" style="max-width:340px" onclick="$('#overlay').innerHTML='';plan=buildPlan(kid());situation=null;render()">Về trang bố mẹ</button></div>`;
+}
+
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;render();scrollTo(0,0)});
+try{speechSynthesis.getVoices()}catch(e){}
+render();
+loadGlobal();
+</script>
+</body>
+</html>
