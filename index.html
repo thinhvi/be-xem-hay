@@ -146,17 +146,19 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 </div></nav>
 <div id="overlay"></div>
 
-<script src="data.js?v=3"></script>
+<script src="data.js?v=4"></script>
 <script>
 /* ---------- Danh mục ---------- */
 const CATS={en:'🔤 Tiếng Anh',math:'🔢 Toán & tư duy',explore:'🔭 Khám phá',feel:'💛 Cảm xúc & tính cách',habit:'🪥 Thói quen & tự lập',move:'🤸 Vận động',story:'📚 Truyện & sáng tạo'};
 const SITS={gian:'😤 Hay cáu, ăn vạ',coem:'👶 Sắp có em / ghen với em',dihoc:'🎒 Sợ đi học',bacsi:'💉 Sắp đi khám, đi tiêm',bo:'🚽 Cai bỉm',danhrang:'🪥 Lười đánh răng',dondo:'🧸 Không chịu dọn đồ',ngu:'🌙 Trước giờ ngủ'};
 const NEXTS={tam:['🛁','Giờ mình đi tắm nhé!','Đi tắm'],an:['🍚','Giờ mình ăn cơm nhé!','Ăn cơm'],ngu:['🛏️','Giờ mình đi ngủ nhé!','Đi ngủ'],xep:['🧩','Ra chơi xếp hình nào!','Xếp hình'],ngoai:['🌳','Ra ngoài chơi nào!','Ra ngoài chơi'],doc:['📖','Đọc sách cùng bố mẹ nhé!','Đọc sách']};
 // Chủ đề ở trường mầm non (theo cách các trường dạy theo tuần)
-const LOP={truong:'🏫 Trường mầm non',banthan:'🙋 Bản thân',giadinh:'🏠 Gia đình',nghe:'👷 Nghề nghiệp',dongvat:'🐾 Động vật',thucvat:'🌱 Cây, hoa, quả',tunhien:'💧 Nước & thiên nhiên'};
+const LOP={truong:'🏫 Trường mầm non',banthan:'🙋 Bản thân',giadinh:'🏠 Gia đình',nghe:'👷 Nghề nghiệp',dongvat:'🐾 Động vật',thucvat:'🌱 Cây, hoa, quả',giaothong:'🚗 Giao thông',tunhien:'💧 Nước & thiên nhiên'};
+// Chủ đề tiếng Anh trong đời sống: mỗi tuần học sâu 1 chủ đề
+const ENT={chao:'👋 Chào hỏi & lễ phép',hangngay:'🪥 Việc hằng ngày',giadinh:'👨‍👩‍👧 Gia đình',cothe:'👃 Cơ thể',camxuc:'😊 Cảm xúc',mau:'🎨 Màu sắc',so:'🔢 Số đếm',convat:'🐶 Con vật',doan:'🍎 Đồ ăn',quanao:'👕 Quần áo',thoitiet:'🌦️ Thời tiết & ngày',xe:'🚗 Xe cộ',nha:'🏠 Nhà & đồ chơi',dongtu:'🏃 Hành động & vị trí',noichon:'🏙️ Nơi chốn & nghề',hinh:'🔺 Hình khối',chu:'🔤 Chữ cái'};
 const AGES=[[18,'18 tháng'],[24,'2 tuổi'],[30,'2 tuổi rưỡi'],[36,'3 tuổi'],[48,'4 tuổi'],[60,'5 tuổi'],[72,'6 tuổi']];
 const V=window.VIDEOS, byId=Object.fromEntries(V.map(v=>[v.id,v]));
-V.forEach(v=>{v.lop=v.lop||[]});
+V.forEach(v=>{v.lop=v.lop||[];v.ent=v.ent||[]});
 
 /* ---------- Lưu dữ liệu ---------- */
 const KEY='bexemhay_v1';
@@ -179,8 +181,12 @@ function todayFocus(k){
   if(k.lop&&d%2===0)return 't:'+k.lop;          // xen kẽ: 1 ngày theo lớp
   return goals[Math.floor(d/(k.lop?2:1))%goals.length]; // 1 ngày theo mục tiêu, luân phiên
 }
-const focusName=f=>f[0]==='t'?'Chủ đề ở lớp: '+LOP[f.slice(2)]:CATS[f.slice(2)];
-const matchFocus=(v,f)=>f[0]==='t'?v.lop.includes(f.slice(2)):v.cat.includes(f.slice(2));
+const focusName=f=>{const [a,b,c]=f.split(':');return a==='t'?'Chủ đề ở lớp: '+LOP[b]:CATS[b]+(c?' · '+ENT[c]:'')};
+const matchFocus=(v,f)=>{const [a,b,c]=f.split(':');return a==='t'?v.lop.includes(b):v.cat.includes(b)&&(!c||v.ent.includes(c))};
+// chủ đề tiếng Anh của tuần này (chỉ lấy chủ đề có đủ video hợp tuổi)
+function enTopic(k){const el=eligible(k).filter(v=>v.cat.includes('en'));
+  const ks=Object.keys(ENT).filter(t=>el.filter(v=>v.ent.includes(t)).length>=3);
+  return ks.length?ks[Math.floor(today()/7)%ks.length]:null}
 function coreFor(k,f){
   const m=S.core[k.id]||(S.core[k.id]={});const c=m[f];
   const ok=c&&byId[c.id]&&!c.done&&viewsOf(k,c.id).length<5&&eligible(k).some(v=>v.id===c.id);
@@ -232,10 +238,10 @@ function rank(list,k){
     // từ 3 tuổi: ưu tiên tập trọn vẹn 6–16 phút, ít chuyển cảnh hơn ghép nhiều clip ngắn
     if(years(k)>=3&&v.dur>=360)x+=.5; if(years(k)<3&&v.dur>600)x-=.4; return x}
 }
-let planCore=null, planFocus=null;
+let planCore=null, planFocus=null, planKey=null;
 function buildPlan(k){
   const limit=k.minutes*60, pool=eligible(k), out=[];let total=0;
-  const used=new Set(); planCore=null; planFocus=null;
+  const used=new Set(); planCore=null; planFocus=null; planKey=null;
   const fits=v=>!out.length||total+v.dur<=limit+60;
   const add=v=>{used.add(v.id);out.push(v);total+=v.dur;return v};
   const take=(arr)=>{for(const v of arr){if(used.has(v.id)||!fits(v))continue;return add(v)}return null};
@@ -244,12 +250,13 @@ function buildPlan(k){
     take(rank(pool.filter(v=>v.sit.includes(situation)),k));
   } else {
     // mỗi buổi 1 chủ đề; mở đầu bằng bài ôn ⭐ nếu hôm nay chưa xem
-    const f=planFocus=todayFocus(k), core=coreFor(k,f);
+    const f=planFocus=todayFocus(k), et=f==='g:en'?enTopic(k):null, fk=planKey=et?f+':'+et:f, core=coreFor(k,fk);
     if(core&&!viewsOf(k,core.id).includes(today())&&fits(core)){add(core);planCore=core.id}
     let guard=0;
     while(total<limit-90&&guard++<12){
       // bé nhỏ xem toàn clip ngắn: chen 1 bài vận động ở giữa
       if(years(k)<3.5&&out.length===2&&!f.endsWith('move')){if(take(rank(pool.filter(v=>v.cat.includes('move')),k)))continue}
+      if(!take(rank(pool.filter(v=>matchFocus(v,fk)&&!v.cat.includes('move')),k)))
       if(!take(rank(pool.filter(v=>matchFocus(v,f)&&!v.cat.includes('move')),k)))
         if(!take(rank(pool.filter(v=>!v.cat.includes('move')),k)))break;
     }
@@ -318,6 +325,7 @@ function homeView(){
     <div class="lbl">Hôm nay học gì? <a class="small" style="color:var(--pri-d);text-transform:none;font-weight:600" href="#" onclick="tab='settings';render();return false">sửa mục tiêu</a></div>
     <div class="chips">${focusOpts(k).map(f=>`<button class="chip ${planFocus===f&&!situation?'on':''}" onclick="pickFocus('${f}')">${f[0]==='t'?'🏫 Ở lớp: '+LOP[f.slice(2)].replace(/^\S+ /,''):CATS[f.slice(2)]}</button>`).join('')}</div>
     <p class="small muted" style="margin:8px 0 0">Mỗi buổi 1 chủ đề, app tự đổi theo ngày${k.lop?' (xen kẽ chủ đề ở lớp và mục tiêu của bố mẹ)':''}. Video ⭐ là bài ôn: con xem lại cách ngày đến khi thuộc.</p>
+    ${planKey&&planKey.startsWith('g:en:')&&!situation?`<p class="small" style="margin:6px 0 0"><b>Tiếng Anh tuần này: ${ENT[planKey.split(':')[2]]}</b></p>`:''}
   </div>
   <h2>Con đang gặp chuyện gì? <span class="small muted" style="font-weight:500">(không bắt buộc)</span></h2>
   <div class="chips">${Object.entries(SITS).map(([key,t])=>`<button class="chip ${situation===key?'on':''}" onclick="setSit('${key}')">${t}</button>`).join('')}</div>
@@ -349,13 +357,15 @@ function swapVid(i){const k=kid(),cur=plan[i];const ids=plan.map(v=>v.id);
 function blockVid(id){if(!confirm('Chặn video này? Con sẽ không được xem nữa.'))return;S.blocked.push(id);save();send({type:'block',id,title:(byId[id]||{}).t});plan=plan.filter(v=>v.id!==id);render()}
 
 function libView(){
-  const k=kid(); const list=V.filter(v=>libCat==='all'||v.cat.includes(libCat)||v.sit.includes(libCat)||v.lop.includes(libCat));
+  const k=kid(); const list=V.filter(v=>libCat==='all'||v.cat.includes(libCat)||v.sit.includes(libCat)||v.lop.includes(libCat)||(libCat.startsWith('e_')&&v.ent.includes(libCat.slice(2))));
   return `<h2>Thư viện đã duyệt · ${V.length} video</h2>
   <p class="small muted" style="margin-top:-4px">Mỗi video đều có người lớn chấm: tuổi, nhịp phim, có tương tác không. Điểm “tắt máy vui vẻ” lấy từ đánh giá của bố mẹ.</p>
   <div class="chips"><button class="chip ${libCat==='all'?'on':''}" onclick="libCat='all';render()">Tất cả</button>
   ${Object.entries(CATS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
   <div class="lbl">Theo tình huống</div>
   <div class="chips">${Object.entries(SITS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
+  <div class="lbl">Tiếng Anh theo chủ đề đời sống</div>
+  <div class="chips">${Object.entries(ENT).map(([c,t])=>`<button class="chip ${libCat==='e_'+c?'on':''}" onclick="libCat='e_${c}';render()">${t}</button>`).join('')}</div>
   <div class="lbl">Theo chủ đề ở lớp</div>
   <div class="chips">${Object.entries(LOP).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
   <div class="card">${list.map(v=>vidRow(v,false)+`<div class="small" style="margin:-4px 0 8px 130px;color:#16877a">💬 ${esc(v.ask)}</div>`).join('')||'<p class="muted">Chưa có video.</p>'}</div>
@@ -507,7 +517,7 @@ function cleanupPlayer(){clearInterval(timer);try{player&&player.destroy()}catch
 function parentExit(){if(!confirm('Dừng buổi xem bây giờ?'))return;endSession()}
 function endSession(){
   const k=kid(); cleanupPlayer();
-  session={kid:k.id,at:Date.now(),videos:plan.slice(0,Math.min(idx+1,plan.length)).map(v=>v.id),watched:played,mood:null,imitate:null,focus:situation?null:planFocus,core:null};
+  session={kid:k.id,at:Date.now(),videos:plan.slice(0,Math.min(idx+1,plan.length)).map(v=>v.id),watched:played,mood:null,imitate:null,focus:situation?null:planKey,core:null};
   session.videos.forEach(id=>addView(k,id));
   if(planCore&&session.videos.includes(planCore))session.core=planCore;
   save();

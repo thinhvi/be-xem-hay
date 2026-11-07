@@ -20,6 +20,9 @@ window.VIDEOS=[
 "dur": 79,
 "lop": [
 "truong"
+],
+"ent": [
+"chao"
 ]
 },
 {
@@ -43,6 +46,9 @@ window.VIDEOS=[
 "lop": [
 "truong",
 "banthan"
+],
+"ent": [
+"chao"
 ]
 },
 {
@@ -64,6 +70,9 @@ window.VIDEOS=[
 "dur": 128,
 "lop": [
 "banthan"
+],
+"ent": [
+"dongtu"
 ]
 },
 {
@@ -85,6 +94,9 @@ window.VIDEOS=[
 "dur": 71,
 "lop": [
 "banthan"
+],
+"ent": [
+"cothe"
 ]
 },
 {
@@ -106,6 +118,10 @@ window.VIDEOS=[
 "dur": 151,
 "lop": [
 "truong"
+],
+"ent": [
+"mau",
+"hinh"
 ]
 },
 {
@@ -126,6 +142,9 @@ window.VIDEOS=[
 "dur": 300,
 "lop": [
 "truong"
+],
+"ent": [
+"chu"
 ]
 },
 {
@@ -147,6 +166,9 @@ window.VIDEOS=[
 "lop": [
 "truong",
 "dongvat"
+],
+"ent": [
+"chu"
 ]
 },
 {
@@ -167,6 +189,9 @@ window.VIDEOS=[
 "dur": 155,
 "lop": [
 "truong"
+],
+"ent": [
+"chu"
 ]
 },
 {
@@ -185,7 +210,8 @@ window.VIDEOS=[
 "sit": [],
 "ask": "Hỏi con: trong phòng có cái gì chỉ có MỘT?",
 "dur": 305,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "bz2oWyDjgbc",
@@ -203,7 +229,8 @@ window.VIDEOS=[
 "sit": [],
 "ask": "Đưa con 1 quả, thêm 1 quả nữa, hỏi: giờ có mấy quả?",
 "dur": 305,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "aJzaNIpbUZo",
@@ -221,7 +248,8 @@ window.VIDEOS=[
 "sit": [],
 "ask": "Cùng con tìm những thứ đi theo đôi: đôi dép, đôi tất.",
 "dur": 305,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "6-duQqX5ECs",
@@ -239,7 +267,8 @@ window.VIDEOS=[
 "sit": [],
 "ask": "Xếp 3 khối đồ chơi, nhờ con đếm lại.",
 "dur": 305,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "pTLtcno5_cY",
@@ -260,6 +289,9 @@ window.VIDEOS=[
 "dur": 119,
 "lop": [
 "truong"
+],
+"ent": [
+"so"
 ]
 },
 {
@@ -281,6 +313,10 @@ window.VIDEOS=[
 "dur": 182,
 "lop": [
 "banthan"
+],
+"ent": [
+"so",
+"cothe"
 ]
 },
 {
@@ -302,6 +338,9 @@ window.VIDEOS=[
 "dur": 251,
 "lop": [
 "truong"
+],
+"ent": [
+"hinh"
 ]
 },
 {
@@ -322,7 +361,8 @@ window.VIDEOS=[
 "dur": 227,
 "lop": [
 "thucvat"
-]
+],
+"ent": []
 },
 {
 "id": "bcVr13Fw7w8",
@@ -342,7 +382,8 @@ window.VIDEOS=[
 "dur": 171,
 "lop": [
 "tunhien"
-]
+],
+"ent": []
 },
 {
 "id": "_aAmaCeq9v4",
@@ -365,7 +406,8 @@ window.VIDEOS=[
 "dur": 213,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "aOebfGGcjVw",
@@ -388,7 +430,8 @@ window.VIDEOS=[
 "dur": 259,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "Cm9ZkYTnCNE",
@@ -408,7 +451,8 @@ window.VIDEOS=[
 "dur": 197,
 "lop": [
 "tunhien"
-]
+],
+"ent": []
 },
 {
 "id": "2PTK9r3vuu8",
@@ -430,7 +474,8 @@ window.VIDEOS=[
 "dur": 303,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "y28GH2GoIyc",
@@ -452,7 +497,8 @@ window.VIDEOS=[
 "dur": 96,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "OrbN-nSTe-E",
@@ -474,7 +520,8 @@ window.VIDEOS=[
 "dur": 84,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "I8eAwKir5Kk",
@@ -497,7 +544,8 @@ window.VIDEOS=[
 "dur": 81,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "Xq3DwzX6MUw",
@@ -518,7 +566,8 @@ window.VIDEOS=[
 ],
 "ask": "Cùng con đặt tay lên bụng, thở thật chậm 3 lần.",
 "dur": 121,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "ewhwY5-EP38",
@@ -541,7 +590,8 @@ window.VIDEOS=[
 "lop": [
 "truong",
 "giadinh"
-]
+],
+"ent": []
 },
 {
 "id": "NsHrNAn-wSw",
@@ -563,7 +613,8 @@ window.VIDEOS=[
 "dur": 444,
 "lop": [
 "truong"
-]
+],
+"ent": []
 },
 {
 "id": "enaRNnEzwi4",
@@ -583,7 +634,8 @@ window.VIDEOS=[
 "dur": 115,
 "lop": [
 "truong"
-]
+],
+"ent": []
 },
 {
 "id": "qQJroIl5jWU",
@@ -606,7 +658,8 @@ window.VIDEOS=[
 "dur": 194,
 "lop": [
 "truong"
-]
+],
+"ent": []
 },
 {
 "id": "wCio_xVlgQ0",
@@ -629,6 +682,9 @@ window.VIDEOS=[
 "dur": 135,
 "lop": [
 "banthan"
+],
+"ent": [
+"hangngay"
 ]
 },
 {
@@ -653,6 +709,10 @@ window.VIDEOS=[
 "lop": [
 "truong",
 "giadinh"
+],
+"ent": [
+"hangngay",
+"nha"
 ]
 },
 {
@@ -675,7 +735,8 @@ window.VIDEOS=[
 "dur": 83,
 "lop": [
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "XfDberOmYHI",
@@ -699,7 +760,8 @@ window.VIDEOS=[
 "lop": [
 "nghe",
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "fmlwjHyXNbo",
@@ -722,7 +784,8 @@ window.VIDEOS=[
 "dur": 736,
 "lop": [
 "nghe"
-]
+],
+"ent": []
 },
 {
 "id": "r5uL5m2eWVI",
@@ -745,7 +808,8 @@ window.VIDEOS=[
 "dur": 736,
 "lop": [
 "nghe"
-]
+],
+"ent": []
 },
 {
 "id": "3LIRSTEtqCg",
@@ -765,7 +829,8 @@ window.VIDEOS=[
 "dur": 195,
 "lop": [
 "dongvat"
-]
+],
+"ent": []
 },
 {
 "id": "isAbhjIYamA",
@@ -785,7 +850,8 @@ window.VIDEOS=[
 "dur": 272,
 "lop": [
 "dongvat"
-]
+],
+"ent": []
 },
 {
 "id": "LhYtcadR9nw",
@@ -806,7 +872,8 @@ window.VIDEOS=[
 "lop": [
 "dongvat",
 "tunhien"
-]
+],
+"ent": []
 },
 {
 "id": "GoSq-yZcJ-4",
@@ -827,6 +894,9 @@ window.VIDEOS=[
 "dur": 205,
 "lop": [
 "dongvat"
+],
+"ent": [
+"convat"
 ]
 },
 {
@@ -852,7 +922,8 @@ window.VIDEOS=[
 "truong",
 "giadinh",
 "dongvat"
-]
+],
+"ent": []
 },
 {
 "id": "7j0OY3236jw",
@@ -873,7 +944,8 @@ window.VIDEOS=[
 "lop": [
 "dongvat",
 "giadinh"
-]
+],
+"ent": []
 },
 {
 "id": "nqQsUNl7_Ds",
@@ -893,7 +965,8 @@ window.VIDEOS=[
 "dur": 403,
 "lop": [
 "giadinh"
-]
+],
+"ent": []
 },
 {
 "id": "dX-Y60bag5c",
@@ -914,7 +987,8 @@ window.VIDEOS=[
 "dur": 347,
 "lop": [
 "dongvat"
-]
+],
+"ent": []
 },
 {
 "id": "4Os0j46SFrU",
@@ -932,7 +1006,8 @@ window.VIDEOS=[
 "sit": [],
 "ask": "Đặt tên cho con quái vật con vừa vẽ.",
 "dur": 211,
-"lop": []
+"lop": [],
+"ent": []
 },
 {
 "id": "wf5K3pP2IUQ",
@@ -955,7 +1030,8 @@ window.VIDEOS=[
 "dur": 336,
 "lop": [
 "tunhien"
-]
+],
+"ent": []
 },
 {
 "id": "a1dgkivX9-A",
@@ -978,7 +1054,8 @@ window.VIDEOS=[
 "lop": [
 "dongvat",
 "tunhien"
-]
+],
+"ent": []
 },
 {
 "id": "B5uT8acErVo",
@@ -1000,7 +1077,8 @@ window.VIDEOS=[
 "dur": 432,
 "lop": [
 "giadinh"
-]
+],
+"ent": []
 },
 {
 "id": "Kx7q23v1pPo",
@@ -1025,7 +1103,8 @@ window.VIDEOS=[
 "lop": [
 "giadinh",
 "banthan"
-]
+],
+"ent": []
 },
 {
 "id": "dx68NMR_Hqs",
@@ -1047,7 +1126,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Khi giận con làm gì? Hít thật sâu rồi đếm 1, 2, 3, 4 nhé.",
-"dur": 738
+"dur": 738,
+"ent": []
 },
 {
 "id": "RzSJMN-GYdk",
@@ -1071,7 +1151,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Khi bực em hay bạn, con nói gì thay vì đánh?",
-"dur": 738
+"dur": 738,
+"ent": []
 },
 {
 "id": "c_kHNm3j_VU",
@@ -1094,7 +1175,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Lúc phải chờ lâu, con có thể làm gì cho đỡ sốt ruột?",
-"dur": 737
+"dur": 737,
+"ent": []
 },
 {
 "id": "eykxCTA73nI",
@@ -1114,7 +1196,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Hôm nay con tự làm được việc gì rồi?",
-"dur": 736
+"dur": 736,
+"ent": []
 },
 {
 "id": "pYE1isaHuPc",
@@ -1134,7 +1217,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Hôm nay con ăn những món gì? Món nào con thích nhất?",
-"dur": 736
+"dur": 736,
+"ent": []
 },
 {
 "id": "BbOCUpwQwL8",
@@ -1158,7 +1242,8 @@ window.VIDEOS=[
 "nghe"
 ],
 "ask": "Nếu nghe chuông báo cháy, con làm gì?",
-"dur": 736
+"dur": 736,
+"ent": []
 },
 {
 "id": "TcycpcPYjY0",
@@ -1178,7 +1263,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Nhà mình có những ai? Con thích làm gì cùng cả nhà?",
-"dur": 736
+"dur": 736,
+"ent": []
 },
 {
 "id": "EkwOoLHe4R4",
@@ -1200,7 +1286,8 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "Khi bạn ở lớp buồn, con làm gì để bạn vui?",
-"dur": 736
+"dur": 736,
+"ent": []
 },
 {
 "id": "HsWYYsO12Ek",
@@ -1220,7 +1307,8 @@ window.VIDEOS=[
 "dongvat"
 ],
 "ask": "Con thằn lằn trông thế nào? Nó sống ở đâu?",
-"dur": 738
+"dur": 738,
+"ent": []
 },
 {
 "id": "6aIo635hYAE",
@@ -1241,7 +1329,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Việc gì khó con đã thử lại nhiều lần?",
-"dur": 737
+"dur": 737,
+"ent": []
 },
 {
 "id": "Ed7dhIG8OQs",
@@ -1263,7 +1352,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Có gì con thấy sợ không? Mình thử từng bước nhỏ nhé.",
-"dur": 737
+"dur": 737,
+"ent": []
 },
 {
 "id": "zlsK15PTrVA",
@@ -1285,7 +1375,8 @@ window.VIDEOS=[
 "thucvat"
 ],
 "ask": "Đi cắm trại cần mang những gì?",
-"dur": 737
+"dur": 737,
+"ent": []
 },
 {
 "id": "BBleojshabk",
@@ -1306,7 +1397,8 @@ window.VIDEOS=[
 "nghe"
 ],
 "ask": "Con muốn nấu món gì cùng bố mẹ?",
-"dur": 429
+"dur": 429,
+"ent": []
 },
 {
 "id": "dIoRncsoFm8",
@@ -1327,7 +1419,8 @@ window.VIDEOS=[
 "nghe"
 ],
 "ask": "Đi chợ nhà mình cần mua những gì? Mình đếm nhé.",
-"dur": 429
+"dur": 429,
+"ent": []
 },
 {
 "id": "J0Jc0MSQglg",
@@ -1348,7 +1441,8 @@ window.VIDEOS=[
 "giaothong"
 ],
 "ask": "Bác đưa thư làm những việc gì?",
-"dur": 429
+"dur": 429,
+"ent": []
 },
 {
 "id": "l0L9WACaMCc",
@@ -1370,7 +1464,8 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "Ngày đầu đi học con thấy thế nào? Con có bạn nào rồi?",
-"dur": 429
+"dur": 429,
+"ent": []
 },
 {
 "id": "3-JaRuTxlaU",
@@ -1393,7 +1488,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Con có hay chơi cùng anh/chị/em không? Hai đứa chơi trò gì?",
-"dur": 420
+"dur": 420,
+"ent": []
 },
 {
 "id": "ZFksfplwVuU",
@@ -1414,7 +1510,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Nếu được mặc đồ hình con vật, con chọn con gì?",
-"dur": 440
+"dur": 440,
+"ent": []
 },
 {
 "id": "fWBJTdq_pdU",
@@ -1434,7 +1531,8 @@ window.VIDEOS=[
 "giadinh"
 ],
 "ask": "Con muốn dựng nhà bí mật bằng gì?",
-"dur": 440
+"dur": 440,
+"ent": []
 },
 {
 "id": "E6Wq_X1OQ5o",
@@ -1457,7 +1555,8 @@ window.VIDEOS=[
 "tunhien"
 ],
 "ask": "Chim cánh cụt sống ở đâu? Ăn gì?",
-"dur": 923
+"dur": 923,
+"ent": []
 },
 {
 "id": "3gt6cHooI6M",
@@ -1479,7 +1578,10 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Ball! Con kể tên mấy loại bóng con biết nhé.",
-"dur": 857
+"dur": 857,
+"ent": [
+"dongtu"
+]
 },
 {
 "id": "rzegRcFj9lc",
@@ -1499,7 +1601,11 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "What color is it? Chỉ đồ vật trong nhà và hỏi con màu gì.",
-"dur": 906
+"dur": 906,
+"ent": [
+"chu",
+"mau"
+]
 },
 {
 "id": "_GeUG-ewMUA",
@@ -1521,7 +1627,11 @@ window.VIDEOS=[
 "thucvat"
 ],
 "ask": "Apple, banana! Lần đi siêu thị tới, con gọi tên rau quả bằng tiếng Anh nhé.",
-"dur": 676
+"dur": 676,
+"ent": [
+"doan",
+"noichon"
+]
 },
 {
 "id": "Dv9fFe-vp6g",
@@ -1543,7 +1653,10 @@ window.VIDEOS=[
 "tunhien"
 ],
 "ask": "Tent, tree, moon! Con chỉ cho bố mẹ cái cây nhé.",
-"dur": 479
+"dur": 479,
+"ent": [
+"noichon"
+]
 },
 {
 "id": "Ptu2eMCP-8A",
@@ -1563,7 +1676,10 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "Chữ đầu tên con là chữ gì?",
-"dur": 661
+"dur": 661,
+"ent": [
+"chu"
+]
 },
 {
 "id": "k2Bl-YnZXNE",
@@ -1584,7 +1700,10 @@ window.VIDEOS=[
 "dongvat"
 ],
 "ask": "Peekaboo! Chơi ú òa với con nhé.",
-"dur": 480
+"dur": 480,
+"ent": [
+"convat"
+]
 },
 {
 "id": "IxVT84N7Mbk",
@@ -1606,7 +1725,10 @@ window.VIDEOS=[
 "dongvat"
 ],
 "ask": "Ba chú gấu có những ai? Cháo của ai nóng quá?",
-"dur": 501
+"dur": 501,
+"ent": [
+"giadinh"
+]
 },
 {
 "id": "qg6KK0iv9QI",
@@ -1627,7 +1749,8 @@ window.VIDEOS=[
 "dongvat"
 ],
 "ask": "Cô phù thủy cho những con vật nào ngồi lên chổi?",
-"dur": 432
+"dur": 432,
+"ent": []
 },
 {
 "id": "T18NCobS43c",
@@ -1650,7 +1773,8 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "Ở thư viện phải nói thế nào? Vì sao?",
-"dur": 737
+"dur": 737,
+"ent": []
 },
 {
 "id": "ljIFmU1QRGY",
@@ -1671,7 +1795,8 @@ window.VIDEOS=[
 "banthan"
 ],
 "ask": "Con sợ gì nhất? Khi sợ con làm gì?",
-"dur": 657
+"dur": 657,
+"ent": []
 },
 {
 "id": "mz6o8b2bFd0",
@@ -1694,7 +1819,8 @@ window.VIDEOS=[
 "truong"
 ],
 "ask": "Hôm nay ở lớp con làm gì vui nhất?",
-"dur": 378
+"dur": 378,
+"ent": []
 },
 {
 "id": "P2PvXbVvqCc",
@@ -1716,6 +1842,1406 @@ window.VIDEOS=[
 "dongvat"
 ],
 "ask": "Vì sao không được vứt rác xuống biển?",
-"dur": 408
+"dur": 408,
+"ent": []
+},
+{
+"id": "WsL3PPwHLGY",
+"t": "What's your favorite color? Con thích màu gì",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"mau"
+],
+"ask": "What's your favorite color? Con chỉ đồ vật màu con thích nhé.",
+"dur": 71
+},
+{
+"id": "fmr9JBacbD0",
+"t": "I Can See a Rainbow: các màu cầu vồng",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"tunhien"
+],
+"ent": [
+"mau"
+],
+"ask": "Red, yellow, blue… Con kể màu cầu vồng nhé.",
+"dur": 109
+},
+{
+"id": "n8qk5BIpP6U",
+"t": "What Color Is It? Đồ vật này màu gì",
+"ch": "The Kids' Picture Show",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"mau"
+],
+"ask": "What color is it? Chỉ đồ trong nhà và hỏi con màu gì.",
+"dur": 339
+},
+{
+"id": "7HXKhuw6ekU",
+"t": "Let's Go to the Farm: con vật nông trại",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat"
+],
+"ent": [
+"convat"
+],
+"ask": "Cow, pig, duck! Con bắt chước tiếng con vật nhé.",
+"dur": 82
+},
+{
+"id": "b8Nm6jscF9M",
+"t": "Đoán tiếng con vật nông trại",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat"
+],
+"ent": [
+"convat"
+],
+"ask": "What's that sound? Bố mẹ kêu, con đoán con gì.",
+"dur": 495
+},
+{
+"id": "TV3X26zXJNE",
+"t": "Whose Tail? Đuôi của con gì",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat"
+],
+"ent": [
+"convat"
+],
+"ask": "Whose tail? Con đoán đuôi của con gì nhé.",
+"dur": 96
+},
+{
+"id": "6fG6vcjkznA",
+"t": "The Aquarium Song: con vật dưới biển",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat",
+"tunhien"
+],
+"ent": [
+"convat"
+],
+"ask": "Fish, octopus, whale! Con thích con nào nhất?",
+"dur": 73
+},
+{
+"id": "EgiQ6GliTrI",
+"t": "Butterfly, Ladybug, Bumblebee: côn trùng",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat",
+"thucvat"
+],
+"ent": [
+"convat"
+],
+"ask": "Butterfly! Ra vườn tìm bươm bướm, con bọ rùa nhé.",
+"dur": 190
+},
+{
+"id": "klDWMX_FZuM",
+"t": "Caitie hát về côn trùng",
+"ch": "Super Simple",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"dongvat",
+"thucvat"
+],
+"ent": [
+"convat"
+],
+"ask": "Bug! Con kể tên các con côn trùng con nhớ.",
+"dur": 717
+},
+{
+"id": "xIfPQJidQHY",
+"t": "Are You Hungry? Con đói chưa",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"doan"
+],
+"ask": "Are you hungry? Yes, I am! Hỏi con trước bữa ăn nhé.",
+"dur": 118
+},
+{
+"id": "tjT_nFtKTas",
+"t": "I Love Eating Vegetables: con thích ăn rau",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"thucvat"
+],
+"ent": [
+"doan"
+],
+"ask": "Carrot, broccoli! Bữa nay con ăn rau gì?",
+"dur": 129
+},
+{
+"id": "gEUpqqP0E9o",
+"t": "Super Simple Show: rau củ và trái cây",
+"ch": "Super Simple",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"thucvat"
+],
+"ent": [
+"doan"
+],
+"ask": "Apple, banana! Gọi tên trái cây trong nhà bằng tiếng Anh nhé.",
+"dur": 670
+},
+{
+"id": "mK4O8hi30UA",
+"t": "Let's Make a Sandwich: làm bánh mì kẹp",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"doan"
+],
+"ask": "Bread, cheese! Lần tới làm bánh mì cùng con nhé.",
+"dur": 110
+},
+{
+"id": "1GDFa-nEzlg",
+"t": "This Is The Way We Get Dressed: tự mặc đồ",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"quanao",
+"hangngay"
+],
+"ask": "Shirt, pants, socks! Sáng mai con tự mặc từng món nhé.",
+"dur": 115
+},
+{
+"id": "-jBfb33_KHU",
+"t": "Put On Your Shoes: đi giày ra ngoài",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"quanao",
+"hangngay"
+],
+"ask": "Put on your shoes! Nói câu này mỗi lần ra ngoài.",
+"dur": 182
+},
+{
+"id": "KFQxBCvgx70",
+"t": "Clothing Song: 15 từ về quần áo",
+"ch": "Dream English Kids",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"quanao"
+],
+"ask": "What are you wearing? Con chỉ quần áo đang mặc.",
+"dur": 329
+},
+{
+"id": "m94Oo5TDWCE",
+"t": "What Are You Wearing? Hôm nay con mặc gì",
+"ch": "Little Fox",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"quanao"
+],
+"ask": "What are you wearing today?",
+"dur": 433
+},
+{
+"id": "sKXEfmV6xro",
+"t": "Truyện: Chiếc tất nhỏ",
+"ch": "Vooks",
+"cat": [
+"en",
+"story"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [],
+"ent": [
+"quanao"
+],
+"ask": "Chiếc tất nhỏ đi đâu? Tất của con đâu rồi?",
+"dur": 298
+},
+{
+"id": "rD6FRDd9Hew",
+"t": "How's The Weather? Hôm nay trời thế nào",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"tunhien"
+],
+"ent": [
+"thoitiet"
+],
+"ask": "How's the weather? Nhìn ra cửa sổ: sunny hay rainy?",
+"dur": 127
+},
+{
+"id": "C_Sc5ZjdfFI",
+"t": "The Seasons Song: bốn mùa",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"tunhien"
+],
+"ent": [
+"thoitiet"
+],
+"ask": "Spring, summer, fall, winter! Bây giờ là mùa gì?",
+"dur": 179
+},
+{
+"id": "loINl3Ln6Ck",
+"t": "Days Of The Week: các ngày trong tuần",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"truong"
+],
+"ent": [
+"thoitiet"
+],
+"ask": "What day is it today?",
+"dur": 86
+},
+{
+"id": "lAaQA8QBBoA",
+"t": "Four Seasons: truyện bốn mùa trong năm",
+"ch": "Little Fox",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"tunhien",
+"thucvat"
+],
+"ent": [
+"thoitiet"
+],
+"ask": "Mùa nào có tuyết? Mùa nào có hoa?",
+"dur": 623
+},
+{
+"id": "BdrZWu2dZ4c",
+"t": "Driving In My Car: đi ô tô",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe"
+],
+"ask": "Beep beep! Đi xe con nhắc bố mẹ thắt dây an toàn nhé.",
+"dur": 145
+},
+{
+"id": "DO41xyuo1MM",
+"t": "The Train Song: tàu hỏa xình xịch",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe"
+],
+"ask": "Choo choo! Tàu hỏa kêu thế nào?",
+"dur": 175
+},
+{
+"id": "YjswctbXc_c",
+"t": "Vehicle Song: các loại xe",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe"
+],
+"ask": "Car, bus, bike! Ra đường đếm xe cùng con nhé.",
+"dur": 140
+},
+{
+"id": "b_P2BRaxhJ4",
+"t": "Tàu hỏa và tàu điện ngầm",
+"ch": "The Kids' Picture Show",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe"
+],
+"ask": "Train, subway! Con thích đi tàu nào?",
+"dur": 279
+},
+{
+"id": "HvVC6RaLwmw",
+"t": "Xe trên phố: trước, sau, trên, dưới",
+"ch": "The Kids' Picture Show",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe",
+"dongtu"
+],
+"ask": "Where is the car? Chơi giấu xe đồ chơi rồi hỏi con.",
+"dur": 197
+},
+{
+"id": "4SLa3STm5zA",
+"t": "Truyện: Craig và chiếc xe đạp vàng",
+"ch": "Vooks",
+"cat": [
+"en",
+"story",
+"feel"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"giaothong"
+],
+"ent": [
+"xe"
+],
+"ask": "Bike! Con có muốn tập đi xe đạp không?",
+"dur": 684
+},
+{
+"id": "BH7SOQT0sOw",
+"t": "Truyện: Chiếc máy xúc và bông hoa",
+"ch": "Vooks",
+"cat": [
+"en",
+"story",
+"feel"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"giaothong",
+"thucvat"
+],
+"ent": [
+"xe"
+],
+"ask": "Máy xúc đã chăm bông hoa thế nào?",
+"dur": 484
+},
+{
+"id": "ecm9HEFcfdQ",
+"t": "The Family Tree: gọi tên người trong nhà",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"giadinh"
+],
+"ask": "Mommy, daddy, grandma! Chỉ ảnh gia đình và gọi tên.",
+"dur": 128
+},
+{
+"id": "AIgJJV6-stM",
+"t": "I Love My Family: con yêu gia đình",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"feel"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"giadinh"
+],
+"ask": "I love you, mommy! Con nói với từng người trong nhà nhé.",
+"dur": 194
+},
+{
+"id": "FXqPs1IvtNs",
+"t": "Family Song: 7 người trong gia đình",
+"ch": "Dream English Kids",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"giadinh"
+],
+"ask": "Who is this? This is my…",
+"dur": 226
+},
+{
+"id": "znj1C8pBxUo",
+"t": "If You're Happy: vui thì vỗ tay",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en",
+"feel",
+"move"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"camxuc"
+],
+"ask": "If you're happy, clap your hands!",
+"dur": 118
+},
+{
+"id": "j1QBY35LdfA",
+"t": "Feelings Song: How are you?",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"feel"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"camxuc",
+"chao"
+],
+"ask": "How are you? I'm happy / sad / tired.",
+"dur": 163
+},
+{
+"id": "dR7GZV25rFQ",
+"t": "Feelings: các cảm xúc",
+"ch": "The Kids' Picture Show",
+"cat": [
+"en",
+"feel"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"camxuc"
+],
+"ask": "Happy, sad, angry. Hôm nay con thấy thế nào?",
+"dur": 241
+},
+{
+"id": "ZSX6jNby7eo",
+"t": "Truyện ngắn về cảm xúc",
+"ch": "Little Fox",
+"cat": [
+"en",
+"feel",
+"story"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"camxuc"
+],
+"ask": "Khi buồn con làm gì cho vui hơn?",
+"dur": 441
+},
+{
+"id": "eUXkj6j6Ezw",
+"t": "Wake Up! Việc buổi sáng",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"hangngay"
+],
+"ask": "Wake up, brush your teeth! Sáng mai nói cùng con nhé.",
+"dur": 172
+},
+{
+"id": "4XLQpRI_wOQ",
+"t": "This Is The Way: rửa mặt, chải đầu",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"hangngay"
+],
+"ask": "This is the way we wash our face!",
+"dur": 139
+},
+{
+"id": "8lu587o8T3c",
+"t": "Hand Washing Song: rửa tay",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"hangngay"
+],
+"ask": "Wash your hands! Hát lúc rửa tay trước bữa ăn.",
+"dur": 162
+},
+{
+"id": "K53J44ioDxI",
+"t": "Good Morning: chào ngày mới",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [],
+"ent": [
+"hangngay",
+"chao"
+],
+"ask": "Good morning! Chào con mỗi sáng bằng tiếng Anh.",
+"dur": 110
+},
+{
+"id": "HKL0N-hydAc",
+"t": "Water, Please! Xin nước",
+"ch": "Little Fox",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"chao"
+],
+"ask": "Water, please! Thank you! Tập nói khi xin đồ.",
+"dur": 70
+},
+{
+"id": "YHE_UUTcp_w",
+"t": "Please and Thank You: lời cảm ơn",
+"ch": "Little Fox",
+"cat": [
+"en",
+"habit"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"chao"
+],
+"ask": "Please… Thank you! Con nói khi nhận đồ nhé.",
+"dur": 114
+},
+{
+"id": "C5axlOB9T4E",
+"t": "Time to Say Goodbye: chào tạm biệt",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"truong"
+],
+"ent": [
+"chao"
+],
+"ask": "Goodbye! See you tomorrow!",
+"dur": 78
+},
+{
+"id": "c-v-7JRisLA",
+"t": "Happy Birthday: chúc mừng sinh nhật",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"chao"
+],
+"ask": "Happy birthday! Sinh nhật ai sắp tới?",
+"dur": 130
+},
+{
+"id": "IjnlkdZvYTE",
+"t": "Rooms of the House: các phòng trong nhà",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"move"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"nha"
+],
+"ask": "Kitchen, bedroom! Đi quanh nhà gọi tên từng phòng.",
+"dur": 131
+},
+{
+"id": "OjmWon9KebI",
+"t": "Can You Please Help Me? Tìm đồ chơi",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"giadinh"
+],
+"ent": [
+"nha",
+"chao"
+],
+"ask": "Can you help me? Nhờ con lấy đồ chơi bằng tiếng Anh.",
+"dur": 190
+},
+{
+"id": "0Wwetb1Ns1o",
+"t": "Cool Toys: con thấy đồ chơi gì",
+"ch": "Dream English Kids",
+"cat": [
+"en"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"nha"
+],
+"ask": "What do you see? I see a ball!",
+"dur": 211
+},
+{
+"id": "RNUZBHlRH4Y",
+"t": "Open Shut Them: mở – đóng",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"move"
+],
+"age": [
+2,
+4
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"dongtu"
+],
+"ask": "Open, shut! Chơi mở nắm tay cùng con.",
+"dur": 148
+},
+{
+"id": "ho0jqU6L88U",
+"t": "Big Small: to – nhỏ",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"move"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"dongtu"
+],
+"ask": "Big or small? Chỉ đồ to, đồ nhỏ trong nhà.",
+"dur": 191
+},
+{
+"id": "9bDbIgv5ruM",
+"t": "On, In, Under: trên, trong, dưới",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"dongtu"
+],
+"ask": "Where's the ball? On, in, under?",
+"dur": 81
+},
+{
+"id": "Aq4UAss33qA",
+"t": "Count and Move: đếm và vận động",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"move",
+"math"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"so",
+"dongtu"
+],
+"ask": "Jump 5 times! Đếm và nhảy cùng con.",
+"dur": 92
+},
+{
+"id": "506tSAr_NCI",
+"t": "Numbers 1–10: vừa đếm vừa làm",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"math",
+"move"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"so"
+],
+"ask": "One, two, three! Đếm bậc cầu thang cùng con.",
+"dur": 167
+},
+{
+"id": "mB3lf9-gpL0",
+"t": "Let's Count 1 to 10",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"math"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"so"
+],
+"ask": "How many? Đếm đồ chơi bằng tiếng Anh.",
+"dur": 100
+},
+{
+"id": "8ChQVaEAKsk",
+"t": "This Is My Face: mắt, mũi, miệng",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+2,
+4
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"cothe"
+],
+"ask": "Where's your nose? Chỉ vào mũi con nhé.",
+"dur": 130
+},
+{
+"id": "LoSu4FwFMwU",
+"t": "Touch Your Head: chạm vào đầu",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en",
+"move"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"banthan"
+],
+"ent": [
+"cothe"
+],
+"ask": "Touch your head! Touch your toes!",
+"dur": 105
+},
+{
+"id": "5rdlXji2jR0",
+"t": "When I Grow Up: lớn lên con làm gì",
+"ch": "Super Simple Songs",
+"cat": [
+"en"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"nghe"
+],
+"ent": [
+"noichon"
+],
+"ask": "What do you want to be? Con muốn làm nghề gì?",
+"dur": 192
+},
+{
+"id": "P8rSk4wFMdU",
+"t": "Jobs Action Song: các nghề",
+"ch": "Dream English Kids",
+"cat": [
+"en",
+"move"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"nghe"
+],
+"ent": [
+"noichon"
+],
+"ask": "Doctor, teacher, firefighter! Bố mẹ làm nghề gì?",
+"dur": 129
+},
+{
+"id": "n8bSNh3zUNM",
+"t": "Những người giúp đỡ mình mỗi ngày",
+"ch": "Little Fox",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+3,
+6
+],
+"pace": "cham",
+"inter": false,
+"sit": [],
+"lop": [
+"nghe"
+],
+"ent": [
+"noichon"
+],
+"ask": "Ai giúp nhà mình mỗi ngày? Bác bảo vệ, cô giáo…",
+"dur": 658
+},
+{
+"id": "DjYzRZidCFE",
+"t": "Let's Go to the Playground: ra sân chơi",
+"ch": "Maple Leaf Learning",
+"cat": [
+"en",
+"move"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [],
+"ent": [
+"noichon"
+],
+"ask": "Slide, swing! Ra sân chơi gọi tên đồ chơi nhé.",
+"dur": 146
+},
+{
+"id": "BWR3DxGHLD4",
+"t": "Let's Go For A Walk Outside: đi dạo",
+"ch": "Super Simple Songs",
+"cat": [
+"en",
+"explore"
+],
+"age": [
+2,
+5
+],
+"pace": "cham",
+"inter": true,
+"sit": [],
+"lop": [
+"thucvat",
+"tunhien"
+],
+"ent": [
+"noichon"
+],
+"ask": "Tree, flower, bird! Đi dạo con thấy gì?",
+"dur": 260
 }
 ];
