@@ -306,13 +306,12 @@ function homeView(){
     <p>Hội Nhi khoa Mỹ và WHO khuyên trẻ dưới 18 tháng <b>không xem màn hình</b>, trừ gọi video với người thân.</p>
     <p class="small muted" style="text-align:left">Thay vào đó bố mẹ thử:<br>• Gọi video với ông bà<br>• Đọc sách tranh, chỉ và gọi tên con vật<br>• Chơi ú òa, hát và vỗ tay cùng con</p>
     <p class="small muted">App sẽ tự mở khi bé đủ 18 tháng.</p>
-    <div class="lbl" style="text-align:left">Bé đã lớn hơn? Chọn lại tuổi</div>${ageChips(k)}</div>`;
+    <button class="mini" onclick="tab='settings';render();scrollTo(0,0)">Bé đã lớn hơn? Sửa tuổi trong Cài đặt</button></div>`;
   if(!plan.length) plan=buildPlan(k);
   const [ni,nt]=NEXTS[k.next];
   return `
   <div class="card">
-    <div class="lbl" style="margin-top:0">${esc(k.name)} mấy tuổi?</div>${ageChips(k)}
-    <div class="lbl">Hôm nay con xem bao lâu?</div>
+    <div class="lbl" style="margin-top:0">Hôm nay con xem bao lâu?</div>
     <div class="chips">${[10,15,20,30].map(m=>`<button class="chip ${k.minutes===m?'on':''}" onclick="setMin(${m})">${m} phút</button>`).join('')}</div>
     <div class="lbl">Xem xong con làm gì?</div>
     <div class="chips">${Object.entries(NEXTS).map(([key,[i,,s]])=>`<button class="chip ${k.next===key?'on':''}" onclick="setNext('${key}')">${i} ${s}</button>`).join('')}</div>
