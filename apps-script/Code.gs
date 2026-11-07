@@ -211,6 +211,7 @@ function quetVideoMoi() {
           if (LOP_THEO_CHU_DE[e] && lop.indexOf(LOP_THEO_CHU_DE[e]) < 0) lop.push(LOP_THEO_CHU_DE[e]);
           if (MUC_THEO_CHU_DE[e] && cat.indexOf(MUC_THEO_CHU_DE[e]) < 0) cat.push(MUC_THEO_CHU_DE[e]);
         });
+        v.title = gonTen_(v.title);
         var vi = v.title;
         try { vi = LanguageApp.translate(v.title.replace(/\|.*$/, '').trim(), 'en', 'vi'); } catch (e) {}
         rows.push([now, 'Chờ duyệt', v.id, 'https://youtu.be/' + v.id, v.title, k[1], Math.round(v.dur / 6) / 10, vi,
@@ -255,6 +256,25 @@ function huongDan_() {
   sh.getRange(1, 1, r.length, 2).setValues(r);
   sh.getRange(1, 1).setFontWeight('bold').setFontSize(14);
   sh.setColumnWidth(1, 160); sh.setColumnWidth(2, 720);
+}
+
+/** Bỏ hashtag và khoảng trắng thừa trong tên video. */
+function gonTen_(t) { return String(t).replace(/#\S+/g, '').replace(/\s{2,}/g, ' ').trim(); }
+
+/** Dọn tab Chờ duyệt: xoá dòng trùng mã video, bỏ hashtag trong tên; chỉ giữ 1 lịch quét. */
+function donDep() {
+  var sh = sheet_('pending'), n = sh.getLastRow() - 1;
+  if (n > 0) {
+    var rows = sh.getRange(2, 1, n, TABS.pending.length).getValues(), seen = {}, keep = [];
+    rows.forEach(function (r) { if (!r[2] || seen[r[2]]) return; seen[r[2]] = 1; r[4] = gonTen_(r[4]); r[7] = gonTen_(r[7]); keep.push(r); });
+    sh.getRange(2, 1, n, TABS.pending.length).clearContent().clearDataValidations();
+    sh.getRange(2, 1, keep.length, TABS.pending.length).setValues(keep);
+    sh.getRange(2, 2, keep.length, 1).setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(TRANG_THAI, true).build());
+    Logger.log('Còn ' + keep.length + ' dòng (bỏ ' + (n - keep.length) + ' dòng trùng)');
+  }
+  var ts = ScriptApp.getProjectTriggers().filter(function (t) { return t.getHandlerFunction() === 'quetVideoMoi'; });
+  ts.slice(1).forEach(function (t) { ScriptApp.deleteTrigger(t); });
+  Logger.log('Lịch quét: ' + Math.min(ts.length, 1));
 }
 
 /** Chạy tay 1 lần trong trình soạn thảo để tạo sẵn các tab (không bắt buộc). */
