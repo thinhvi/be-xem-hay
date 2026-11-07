@@ -207,7 +207,11 @@ let DEVICE; try{DEVICE=localStorage.getItem('bexemhay_dev')||('m'+Math.random().
 function send(obj){if(!API)return Promise.resolve(false);obj.device=DEVICE;obj.months=kid().months;
   return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(obj)}).then(()=>true).catch(()=>false)}
 let G=null; // điểm gom từ mọi bố mẹ
-function loadGlobal(){if(!API)return;fetch(API+'?action=scores').then(r=>r.json()).then(j=>{if(j&&j.ok){G=j;render()}}).catch(()=>{})}
+function loadGlobal(){if(!API)return;fetch(API+'?action=scores').then(r=>r.json()).then(j=>{if(j&&j.ok){G=j;
+  // video mới đã được duyệt trong Sheet (tab Chờ duyệt) → thêm vào thư viện
+  let added=0;(j.approved||[]).forEach(v=>{if(!v||!v.id||byId[v.id])return;v.lop=v.lop||[];v.ent=v.ent||[];v.sit=v.sit||[];V.push(v);byId[v.id]=v;added++});
+  if(added&&!$('#overlay').innerHTML)plan=[];
+  render()}}).catch(()=>{})}
 
 /* ---------- Điểm video từ đánh giá của bố mẹ ---------- */
 function scores(){
