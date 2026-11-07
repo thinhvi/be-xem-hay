@@ -165,21 +165,22 @@ var CAU_HOI = {
   dongtu: 'Chơi làm theo: jump, run, stop!', noichon: 'Lớn lên con muốn làm gì?'
 };
 
-function giay_(t) { var p = String(t).split(':').map(Number), s = 0; p.forEach(function (x) { s = s * 60 + x; }); return s; }
 function giaiMa_(s) { try { return JSON.parse('"' + s + '"'); } catch (e) { return s; } }
 
-/** Đọc ~30 video mới nhất trên trang "Video" của kênh. */
+/** PT1H2M3S → giây */
+function isoGiay_(s) { var m = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/.exec(s || '') || []; return (+m[1] || 0) * 3600 + (+m[2] || 0) * 60 + (+m[3] || 0); }
+
+/** 30 video mới nhất của kênh qua YouTube Data API (dịch vụ nâng cao "YouTube" trong dự án).
+ *  Chỉ giữ video nhúng được, không phải livestream, và kênh đã gắn nhãn "dành cho trẻ em". */
 function videoCuaKenh_(channelId) {
-  var html = UrlFetchApp.fetch('https://www.youtube.com/channel/' + channelId + '/videos', {
-    muteHttpExceptions: true, headers: { 'Accept-Language': 'en', 'User-Agent': 'Mozilla/5.0 (Macintosh) AppleWebKit/537.36 Chrome/130 Safari/537.36' }
-  }).getContentText();
-  var out = [];
-  html.split('"richItemRenderer"').slice(1).forEach(function (p) {
-    var id = /"contentId":"([^"]+)"/.exec(p), t = /"lockupMetadataViewModel":\{"title":\{"content":"(.*?)"/.exec(p),
-        d = /"text":"(\d+:\d+(?::\d+)?)"/.exec(p);
-    if (id && t && d) out.push({ id: id[1], title: giaiMa_(t[1]), dur: giay_(d[1]) });
-  });
-  return out;
+  var list = YouTube.PlaylistItems.list('contentDetails', { playlistId: 'UU' + channelId.slice(2), maxResults: 30 });
+  var ids = (list.items || []).map(function (i) { return i.contentDetails.videoId; });
+  if (!ids.length) return [];
+  var vs = YouTube.Videos.list('snippet,contentDetails,status', { id: ids.join(',') });
+  return (vs.items || []).filter(function (x) {
+    return x.status && x.status.embeddable !== false && x.status.madeForKids !== false &&
+      x.snippet.liveBroadcastContent === 'none';
+  }).map(function (x) { return { id: x.id, title: x.snippet.title, dur: isoGiay_(x.contentDetails.duration) }; });
 }
 
 /** Mã video đã có trong app hoặc đã nằm trong Chờ duyệt. */
