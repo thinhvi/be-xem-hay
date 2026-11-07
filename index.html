@@ -67,11 +67,14 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 /* ===== Kid mode ===== */
 .kidmode{position:fixed;inset:0;background:#1d1b2b;z-index:20;display:flex;flex-direction:column}
 .sky{height:64px;position:relative;background:linear-gradient(90deg,#8fd3ff,#ffd59a 70%,#6b6fb5);transition:filter 1s;flex:none}
-.sky .track{position:absolute;left:56px;right:56px;top:30px;height:6px;border-radius:4px;background:rgba(255,255,255,.55)}
+.sky .track{position:absolute;left:72px;right:56px;top:30px;height:6px;border-radius:4px;background:rgba(255,255,255,.55)}
 .sky .fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:#fff}
-.sky .sunico{position:absolute;top:-17px;font-size:34px;transform:translateX(-50%);transition:left 1s linear}
+.sky .sunico{position:absolute;top:-19px;font-size:34px;line-height:1;transform:translateX(-50%);transition:left 1s linear;animation:bob 1.2s ease-in-out infinite}
+.sky .sunico.flip{transform:translateX(-50%) scaleX(-1)}
+@keyframes bob{50%{margin-top:-3px}}
 .sky .home{position:absolute;right:14px;top:14px;font-size:30px}
-.sky .from{position:absolute;left:14px;top:14px;font-size:30px}
+.sky .from{position:absolute;left:10px;top:7px;width:50px;height:50px;border-radius:50%;border:3px solid #fff;background:#FFE8DF center/cover;display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.skyprev{border-radius:14px;overflow:hidden}
 .stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
 #ytwrap{width:100%;height:100%}
 #ytwrap iframe{width:100%;height:100%}
@@ -116,8 +119,9 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 @media (orientation:landscape) and (max-height:520px){
   .sky{height:30px}
   .sky .track{top:13px;left:44px;right:44px;height:5px}
-  .sky .sunico{font-size:22px;top:-9px}
-  .sky .home,.sky .from{font-size:20px;top:3px}
+  .sky .sunico{font-size:22px;top:-11px}
+  .sky .home{font-size:20px;top:3px}
+  .sky .from{width:26px;height:26px;top:2px;left:8px;font-size:16px;border-width:2px}
   .toast{font-size:16px;padding:8px 14px;top:10px}
   .toast span{font-size:28px}
   .lastchip{font-size:13px;padding:5px 10px;bottom:8px;left:auto;right:120px}
@@ -192,7 +196,7 @@ const fmt=s=>{s=Math.round(s);const m=Math.floor(s/60);return m+':'+String(s%60)
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 /* ---------- Gửi đánh giá về Google Sheet chung ---------- */
-const API=''; // URL ứng dụng web Apps Script
+const API='https://script.google.com/macros/s/AKfycbyIdJoVH8JPvVY1IpdMBAs8WvZ4J9rUCn8Fmgpuo1DAUodvRnSNSoN77dMVH8IMrt6i/exec'; // URL ứng dụng web Apps Script
 let DEVICE; try{DEVICE=localStorage.getItem('bexemhay_dev')||('m'+Math.random().toString(36).slice(2,8));localStorage.setItem('bexemhay_dev',DEVICE)}catch(e){DEVICE='m'+Math.random().toString(36).slice(2,8)}
 function send(obj){if(!API)return Promise.resolve(false);obj.device=DEVICE;obj.months=kid().months;
   return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(obj)}).then(()=>true).catch(()=>false)}
@@ -277,6 +281,20 @@ function ageText(k){return k.months<24?k.months+' tháng':Math.floor(k.months/12
 function pickKid(id){S.active=id;save();plan=[];showPlan=false;situation=null;render()}
 function addKid(){const name=prompt('Tên gọi của bé?');if(!name)return;
   const k={id:'k'+Date.now(),name,months:36,goals:['en','feel'],minutes:20,next:'tam'};S.kids.push(k);S.active=k.id;save();plan=[];tab='settings';render();scrollTo(0,0)}
+/* ---------- Thanh thời gian theo bé ---------- */
+const RUNNERS=['🚓','🚒','🚜','🚀','🦖','🦄','🦋','🐰','🎈','🧚'];
+const FLIP=['🚓','🚒','🚜','🦄']; // các xe này hướng sang trái, lật lại cho chạy sang phải
+function runnerOf(k){return k.runner||(k.gender==='gai'?'🦄':k.gender==='trai'?'🚓':'☀️')}
+function avatarHTML(k){return k.photo?`<span class="from" style="background-image:url(${k.photo})"></span>`:`<span class="from">${k.gender==='gai'?'👧':k.gender==='trai'?'👦':'🧒'}</span>`}
+function skyHTML(k,p){const r=runnerOf(k);
+  return `<div class="sky" id="sky">${avatarHTML(k)}<div class="track"><div class="fill" id="fill" style="width:${p*100}%"></div><span class="sunico${FLIP.includes(r)?' flip':''}" id="sunico" style="left:${p*100}%">${r}</span></div><span class="home">${NEXTS[k.next][0]}</span></div>`}
+function setGender(g){const k=kid();k.gender=g;save();render()}
+function setRunner(r){kid().runner=r;save();render()}
+function setPhoto(f){if(!f)return;const img=new Image(),url=URL.createObjectURL(f);
+  img.onload=()=>{const c=document.createElement('canvas'),s=160;c.width=c.height=s;const m=Math.min(img.width,img.height);
+    c.getContext('2d').drawImage(img,(img.width-m)/2,(img.height-m)/2,m,m,0,0,s,s);URL.revokeObjectURL(url);
+    kid().photo=c.toDataURL('image/jpeg',.82);save();render()};
+  img.src=url}
 function ageChips(k){return `<div class="chips">${AGES.map(([m,t])=>`<button class="chip ${k.months===m?'on':''}" onclick="setAge(${m})">${t}</button>`).join('')}</div>`}
 function setAge(m){if(!m||m<1)return;kid().months=m;save();plan=[];render()}
 function setLop(l){const k=kid();k.lop=k.lop===l?null:l;k.pick=null;save();plan=[];render()}
@@ -385,6 +403,16 @@ function settingsView(){
    <div class="chips">${Object.entries(LOP).map(([c,t])=>{const n=eligible(k).filter(v=>v.lop.includes(c)).length;return `<button class="chip ${k.lop===c?'on':''}" onclick="setLop('${c}')">${t} <span class="muted small">${n}</span></button>`}).join('')}</div>
    <p class="small muted" style="margin:8px 0 0">Hỏi cô giáo hoặc xem bảng chủ đề tuần ở lớp. Chọn rồi thì app xen kẽ: 1 ngày xem đúng chủ đề ở lớp, 1 ngày theo mục tiêu của bố mẹ. Con học ở lớp, về nhà gặp lại sẽ nhớ lâu hơn. Chạm lần nữa để bỏ chọn.</p>
   </div>
+  <h2>Thanh thời gian của ${esc(k.name)}</h2><div class="card">
+   <div class="skyprev">${skyHTML(k,.35)}</div>
+   <div class="lbl">Bé là</div>
+   <div class="chips">${[['trai','👦 Con trai'],['gai','👧 Con gái']].map(([g,t])=>`<button class="chip ${k.gender===g?'on':''}" onclick="setGender('${g}')">${t}</button>`).join('')}</div>
+   <div class="lbl">Hình chạy trên thanh</div>
+   <div class="chips">${RUNNERS.map(r=>`<button class="chip ${runnerOf(k)===r?'on':''}" style="font-size:22px;padding:4px 10px" onclick="setRunner('${r}')">${r}</button>`).join('')}</div>
+   <div class="lbl">Ảnh của bé (đầu thanh)</div>
+   <div class="rec"><label class="mini" style="cursor:pointer">📷 ${k.photo?'Đổi ảnh':'Chọn ảnh'}<input type="file" accept="image/*" style="display:none" onchange="setPhoto(this.files[0])"></label>${k.photo?`<button class="mini red" onclick="delete kid().photo;save();render()">Xoá ảnh</button>`:''}</div>
+   <p class="small muted" style="margin:8px 0 0">Ảnh chỉ lưu trên máy này, không gửi đi đâu. Không có ảnh thì app dùng hình em bé mặc định.</p>
+  </div>
   <h2>Giọng bố mẹ lúc tạm biệt</h2><div class="card">
    <p class="small muted" style="margin-top:0">Ghi âm một câu ngắn, ví dụ: “${esc(k.name)} ơi, hết giờ rồi, bố đợi con đi tắm nhé!”. Lúc hết giờ app sẽ phát giọng của anh/chị thay cho giọng máy.</p>
    <div class="rec"><button class="mini" id="recbtn" onclick="recVoice()">🎙️ ${S.voice[k.id]?'Ghi lại':'Bắt đầu ghi âm'}</button>${S.voice[k.id]?`<button class="mini" onclick="new Audio(S.voice[kid().id]).play()">▶ Nghe thử</button><button class="mini red" onclick="delete S.voice[kid().id];save();render()">Xoá</button>`:''}</div>
@@ -424,7 +452,7 @@ function startKid(){
   if(!ytReady){alert('Đang tải trình phát, thử lại sau vài giây nhé.');return}
   const k=kid(); limit=k.minutes*60; idx=0; played=0; warned5=warned2=false; isLast=false; finishing=false;
   $('#overlay').innerHTML=`<div class="kidmode" id="km">
-    <div class="sky" id="sky"><span class="from">🌤️</span><div class="track"><div class="fill" id="fill" style="width:0"></div><span class="sunico" id="sunico" style="left:0">☀️</span></div><span class="home">${NEXTS[k.next][0]}</span></div>
+    ${skyHTML(k,0)}
     <div class="stage"><div id="ytwrap"><div id="yt"></div></div>
       <div class="shield" id="shield" onclick="togglePause()"><div class="bigplay" id="bigplay">▶️</div></div>
       <div id="toastbox"></div><div class="lastchip hide" id="lastchip">⭐ Video cuối cùng</div>
@@ -457,7 +485,7 @@ function tick(){
   const now=Date.now(),dt=(now-lastTick)/1000;lastTick=now;
   if(player&&player.getPlayerState&&player.getPlayerState()===YT.PlayerState.PLAYING)played+=dt;
   const p=Math.min(1,played/limit);
-  const f=$('#fill'),s=$('#sunico');if(f){f.style.width=p*100+'%';s.style.left=p*100+'%';s.textContent=p>.85?'🌇':p>.6?'🌤️':'☀️';$('#sky').style.filter=`saturate(${1-p*.5}) brightness(${1-p*.25})`}
+  const f=$('#fill'),s=$('#sunico');if(f){f.style.width=p*100+'%';s.style.left=p*100+'%';if(runnerOf(kid())==='☀️')s.textContent=p>.85?'🌇':p>.6?'🌤️':'☀️';$('#sky').style.filter=`saturate(${1-p*.5}) brightness(${1-p*.25})`}
   const left=limit-played;
   if(!warned5&&limit>360&&left<=300){warned5=true;toast('🐻','Sắp hết giờ rồi nhé!');say('Sắp hết giờ rồi nhé!')}
   if(!warned2&&left<=120){warned2=true;toast('🦉','Còn một chút nữa thôi!');say('Còn một chút nữa thôi')}
