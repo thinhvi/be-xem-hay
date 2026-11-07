@@ -109,6 +109,27 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 .blocked18{text-align:center}
 .blocked18 .ic{font-size:58px}
 .rec{display:flex;gap:8px}
+.tag.core{background:#FFF0C2;color:#8a5a00;font-weight:700}
+.fsbtn{position:absolute;left:10px;bottom:10px;z-index:3;font-size:12px;color:rgba(255,255,255,.6);padding:8px}
+.agein{margin-top:8px;max-width:180px}
+/* Xoay ngang: thu nhỏ thanh trời, video chiếm gần hết màn hình */
+@media (orientation:landscape) and (max-height:520px){
+  .sky{height:30px}
+  .sky .track{top:13px;left:44px;right:44px;height:5px}
+  .sky .sunico{font-size:22px;top:-9px}
+  .sky .home,.sky .from{font-size:20px;top:3px}
+  .toast{font-size:16px;padding:8px 14px;top:10px}
+  .toast span{font-size:28px}
+  .lastchip{font-size:13px;padding:5px 10px;bottom:8px;left:auto;right:120px}
+  .full{padding:10px;overflow:auto}
+  .bear{font-size:64px}
+  .bye h1{font-size:24px;margin-top:0}
+  .bye p{font-size:16px}
+  .nextcard{margin-top:10px;font-size:18px;padding:8px 18px}
+  .nextcard span{font-size:30px}
+  .star{width:90px;height:90px;font-size:42px;margin-top:12px}
+  .faces{margin-top:12px}
+}
 </style>
 </head>
 <body>
@@ -127,7 +148,11 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 const CATS={en:'🔤 Tiếng Anh',math:'🔢 Toán & tư duy',explore:'🔭 Khám phá',feel:'💛 Cảm xúc & tính cách',habit:'🪥 Thói quen & tự lập',move:'🤸 Vận động',story:'📚 Truyện & sáng tạo'};
 const SITS={gian:'😤 Hay cáu, ăn vạ',coem:'👶 Sắp có em / ghen với em',dihoc:'🎒 Sợ đi học',bacsi:'💉 Sắp đi khám, đi tiêm',bo:'🚽 Cai bỉm',danhrang:'🪥 Lười đánh răng',dondo:'🧸 Không chịu dọn đồ',ngu:'🌙 Trước giờ ngủ'};
 const NEXTS={tam:['🛁','Giờ mình đi tắm nhé!','Đi tắm'],an:['🍚','Giờ mình ăn cơm nhé!','Ăn cơm'],ngu:['🛏️','Giờ mình đi ngủ nhé!','Đi ngủ'],xep:['🧩','Ra chơi xếp hình nào!','Xếp hình'],ngoai:['🌳','Ra ngoài chơi nào!','Ra ngoài chơi'],doc:['📖','Đọc sách cùng bố mẹ nhé!','Đọc sách']};
+// Chủ đề ở trường mầm non (theo cách các trường dạy theo tuần)
+const LOP={truong:'🏫 Trường mầm non',banthan:'🙋 Bản thân',giadinh:'🏠 Gia đình',nghe:'👷 Nghề nghiệp',dongvat:'🐾 Động vật',thucvat:'🌱 Cây, hoa, quả',tunhien:'💧 Nước & thiên nhiên'};
+const AGES=[[18,'18 tháng'],[24,'2 tuổi'],[30,'2 tuổi rưỡi'],[36,'3 tuổi'],[48,'4 tuổi'],[60,'5 tuổi'],[72,'6 tuổi']];
 const V=window.VIDEOS, byId=Object.fromEntries(V.map(v=>[v.id,v]));
+V.forEach(v=>{v.lop=v.lop||[]});
 
 /* ---------- Lưu dữ liệu ---------- */
 const KEY='bexemhay_v1';
@@ -136,7 +161,31 @@ function defState(){return{
         {id:'k2',name:'Bé nhỏ',months:10,goals:['en'],minutes:15,next:'ngu'}],
   active:'k1',sessions:[],blocked:[],voice:{}}}
 let S; try{S=JSON.parse(localStorage.getItem(KEY))||defState()}catch(e){S=defState()}
+S.views=S.views||{}; S.core=S.core||{};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+/* ---------- Lặp lại để học: mỗi ngày 1 chủ đề, có 1 bài ôn ⭐ xem cách ngày đến khi thuộc ---------- */
+const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);
+function viewsOf(k,id){return ((S.views[k.id]||{})[id])||[]}
+function addView(k,id){const m=S.views[k.id]||(S.views[k.id]={});const a=m[id]||(m[id]=[]);if(!a.includes(today()))a.push(today())}
+function focusOpts(k){const o=[];if(k.lop)o.push('t:'+k.lop);(k.goals.length?k.goals:['en']).forEach(g=>o.push('g:'+g));return o}
+function todayFocus(k){
+  const o=focusOpts(k),d=today();
+  if(k.pick&&k.pick.day===d&&o.includes(k.pick.f))return k.pick.f;
+  const goals=o.filter(f=>f[0]==='g');
+  if(k.lop&&d%2===0)return 't:'+k.lop;          // xen kẽ: 1 ngày theo lớp
+  return goals[Math.floor(d/(k.lop?2:1))%goals.length]; // 1 ngày theo mục tiêu, luân phiên
+}
+const focusName=f=>f[0]==='t'?'Chủ đề ở lớp: '+LOP[f.slice(2)]:CATS[f.slice(2)];
+const matchFocus=(v,f)=>f[0]==='t'?v.lop.includes(f.slice(2)):v.cat.includes(f.slice(2));
+function coreFor(k,f){
+  const m=S.core[k.id]||(S.core[k.id]={});const c=m[f];
+  const ok=c&&byId[c.id]&&!c.done&&viewsOf(k,c.id).length<5&&eligible(k).some(v=>v.id===c.id);
+  if(ok)return byId[c.id];
+  const done=Object.values(m).filter(x=>x.done).map(x=>x.id);
+  const cand=rank(eligible(k).filter(v=>matchFocus(v,f)&&!done.includes(v.id)&&!(c&&c.id===v.id)&&!v.cat.includes('move')),k);
+  if(!cand[0])return null;
+  m[f]={id:cand[0].id,since:today(),done:false};save();return cand[0];
+}
 const kid=()=>S.kids.find(k=>k.id===S.active)||S.kids[0];
 const years=k=>k.months/12;
 const fmt=s=>{s=Math.round(s);const m=Math.floor(s/60);return m+':'+String(s%60).padStart(2,'0')};
@@ -175,27 +224,35 @@ function recentIds(k,n=3){return S.sessions.filter(s=>s.kid===k.id).slice(-n).fl
 function rank(list,k){
   const sc=scores(),rec=recentIds(k);
   return shuffle(list.slice()).sort((a,b)=>val(b)-val(a));
-  function val(v){const o=sc[v.id];let x=0;if(o&&o.n)x+=(o.good-o.bad*1.5)/o.n;if(rec.includes(v.id))x-=1.2;if(v.inter&&years(k)<4)x+=.3;return x}
+  function val(v){const o=sc[v.id];let x=0;if(o&&o.n)x+=(o.good-o.bad*1.5)/o.n;if(rec.includes(v.id))x-=1.2;if(v.inter&&years(k)<4)x+=.3;
+    // từ 3 tuổi: ưu tiên tập trọn vẹn 6–16 phút, ít chuyển cảnh hơn ghép nhiều clip ngắn
+    if(years(k)>=3&&v.dur>=360)x+=.5; if(years(k)<3&&v.dur>600)x-=.4; return x}
 }
+let planCore=null, planFocus=null;
 function buildPlan(k){
   const limit=k.minutes*60, pool=eligible(k), out=[];let total=0;
-  const used=new Set();
-  const take=(arr)=>{for(const v of arr){if(used.has(v.id))continue;if(out.length&&total+v.dur>limit+45)continue;used.add(v.id);out.push(v);total+=v.dur;return v}return null};
+  const used=new Set(); planCore=null; planFocus=null;
+  const fits=v=>!out.length||total+v.dur<=limit+60;
+  const add=v=>{used.add(v.id);out.push(v);total+=v.dur;return v};
+  const take=(arr)=>{for(const v of arr){if(used.has(v.id)||!fits(v))continue;return add(v)}return null};
   if(situation){
     take(rank(pool.filter(v=>v.sit.includes(situation)),k));
     take(rank(pool.filter(v=>v.sit.includes(situation)),k));
+  } else {
+    // mỗi buổi 1 chủ đề; mở đầu bằng bài ôn ⭐ nếu hôm nay chưa xem
+    const f=planFocus=todayFocus(k), core=coreFor(k,f);
+    if(core&&!viewsOf(k,core.id).includes(today())&&fits(core)){add(core);planCore=core.id}
+    let guard=0;
+    while(total<limit-90&&guard++<12){
+      // bé nhỏ xem toàn clip ngắn: chen 1 bài vận động ở giữa
+      if(years(k)<3.5&&out.length===2&&!f.endsWith('move')){if(take(rank(pool.filter(v=>v.cat.includes('move')),k)))continue}
+      if(!take(rank(pool.filter(v=>matchFocus(v,f)&&!v.cat.includes('move')),k)))
+        if(!take(rank(pool.filter(v=>!v.cat.includes('move')),k)))break;
+    }
   }
-  const goals=k.goals.length?k.goals:['en'];
-  let gi=0,guard=0;
-  // nhịp: học → vận động → học → ... → dịu lại ở cuối
-  while(total<limit-100&&guard++<20){
-    if(out.length%3===1) {if(take(rank(pool.filter(v=>v.cat.includes('move')),k)))continue}
-    const g=goals[gi++%goals.length];
-    if(!take(rank(pool.filter(v=>v.cat.includes(g)&&!(v.cat.includes('move'))),k))) if(!take(rank(pool,k)))break;
-  }
-  // video cuối: nhịp chậm, dịu
+  // video cuối: nhịp chậm, dịu (không thay bài ôn)
   const last=out[out.length-1];
-  if(last&&(last.pace!=='cham'||last.cat.includes('move'))){
+  if(last&&last.id!==planCore&&(last.pace!=='cham'||last.cat.includes('move'))){
     const calm=rank(pool.filter(v=>v.pace==='cham'&&!v.cat.includes('move')&&(v.cat.includes('feel')||v.cat.includes('story'))&&!used.has(v.id)),k);
     const c=calm.find(v=>total-last.dur+v.dur<=limit+60);
     if(c){out[out.length-1]=c}
@@ -216,10 +273,13 @@ function header(){
   <div class="kids">${S.kids.map(k=>`<button class="kid ${k.id===S.active?'on':''}" onclick="pickKid('${k.id}')">${esc(k.name)} · ${ageText(k)}</button>`).join('')}
   <button class="kid" onclick="addKid()">＋ Thêm bé</button></div>`;
 }
-function ageText(k){return k.months<24?k.months+' tháng':Math.floor(k.months/12)+' tuổi'}
+function ageText(k){return k.months<24?k.months+' tháng':Math.floor(k.months/12)+(k.months%12>=6?',5':'')+' tuổi'}
 function pickKid(id){S.active=id;save();plan=[];showPlan=false;situation=null;render()}
-function addKid(){const name=prompt('Tên gọi của bé?');if(!name)return;const m=parseInt(prompt('Bé bao nhiêu tháng tuổi? (ví dụ 3 tuổi = 36)'),10);if(!m)return;
-  const k={id:'k'+Date.now(),name,months:m,goals:['en','feel'],minutes:20,next:'tam'};S.kids.push(k);S.active=k.id;save();render()}
+function addKid(){const name=prompt('Tên gọi của bé?');if(!name)return;
+  const k={id:'k'+Date.now(),name,months:36,goals:['en','feel'],minutes:20,next:'tam'};S.kids.push(k);S.active=k.id;save();plan=[];tab='settings';render();scrollTo(0,0)}
+function setAge(m){if(!m||m<1)return;kid().months=m;save();plan=[];render()}
+function setLop(l){const k=kid();k.lop=k.lop===l?null:l;k.pick=null;save();plan=[];render()}
+function pickFocus(f){const k=kid();k.pick={day:today(),f};situation=null;save();plan=buildPlan(k);render()}
 
 function homeView(){
   const k=kid();
@@ -235,19 +295,20 @@ function homeView(){
     <div class="chips">${[10,15,20,30].map(m=>`<button class="chip ${k.minutes===m?'on':''}" onclick="setMin(${m})">${m} phút</button>`).join('')}</div>
     <div class="lbl">Xem xong con làm gì?</div>
     <div class="chips">${Object.entries(NEXTS).map(([key,[i,,s]])=>`<button class="chip ${k.next===key?'on':''}" onclick="setNext('${key}')">${i} ${s}</button>`).join('')}</div>
-    <div class="lbl">Mục tiêu của con <a class="small" style="color:var(--pri-d);text-transform:none;font-weight:600" href="#" onclick="tab='settings';render();return false">sửa</a></div>
-    <div class="chips">${k.goals.map(g=>`<span class="chip on">${CATS[g]}</span>`).join('')}</div>
+    <div class="lbl">Hôm nay học gì? <a class="small" style="color:var(--pri-d);text-transform:none;font-weight:600" href="#" onclick="tab='settings';render();return false">sửa mục tiêu</a></div>
+    <div class="chips">${focusOpts(k).map(f=>`<button class="chip ${planFocus===f&&!situation?'on':''}" onclick="pickFocus('${f}')">${f[0]==='t'?'🏫 Ở lớp: '+LOP[f.slice(2)].replace(/^\S+ /,''):CATS[f.slice(2)]}</button>`).join('')}</div>
+    <p class="small muted" style="margin:8px 0 0">Mỗi buổi 1 chủ đề, app tự đổi theo ngày${k.lop?' (xen kẽ chủ đề ở lớp và mục tiêu của bố mẹ)':''}. Video ⭐ là bài ôn: con xem lại cách ngày đến khi thuộc.</p>
   </div>
   <h2>Con đang gặp chuyện gì? <span class="small muted" style="font-weight:500">(không bắt buộc)</span></h2>
   <div class="chips">${Object.entries(SITS).map(([key,t])=>`<button class="chip ${situation===key?'on':''}" onclick="setSit('${key}')">${t}</button>`).join('')}</div>
   <div class="card">
     <div class="row between"><b>Danh sách buổi này · ${plan.length} video · ${Math.round(planTotal()/60)} phút</b>
       <button class="mini" onclick="plan=buildPlan(kid());render()">🔀 Đổi</button></div>
-    <p class="small muted" style="margin:4px 0 8px">Học → vận động → học → kết thúc bằng video nhịp chậm cho con dịu lại.</p>
+    <p class="small muted" style="margin:4px 0 8px">${situation?SITS[situation]:'⭐ Bài ôn → video mới cùng chủ đề'} → kết thúc bằng video nhịp chậm cho con dịu lại.</p>
     ${plan.map((v,i)=>vidRow(v,true,i)).join('')}
   </div>
   <button class="btn" onclick="startKid()">▶ Bắt đầu cho ${esc(k.name)} xem</button>
-  <p class="small muted" style="text-align:center;margin-top:12px">Mẹo: bật “Truy cập được hướng dẫn” (iPhone) hoặc “Ghim màn hình” (Android) để con không thoát ra app khác.</p>
+  <p class="small muted" style="text-align:center;margin-top:12px">📱 Xoay ngang điện thoại để video to hơn (iPhone: tắt khoá xoay màn hình trước).<br>Mẹo: bật “Truy cập được hướng dẫn” (iPhone) hoặc “Ghim màn hình” (Android) để con không thoát ra app khác.</p>
   <p class="small" style="text-align:center"><a href="#" style="color:var(--pri-d);font-weight:600" onclick="tab='settings';render();setTimeout(()=>$('#fbcard').scrollIntoView({behavior:'smooth'}),50);return false">💬 Góp ý cho app</a></p>`;
 }
 function vidRow(v,inPlan,i){
@@ -255,7 +316,7 @@ function vidRow(v,inPlan,i){
   const pct=sc&&sc.n?Math.round(sc.good/sc.n*100):null;
   return `<div class="vid"><div class="thumb" style="background-image:url(https://i.ytimg.com/vi/${v.id}/mqdefault.jpg)"><b>${fmt(v.dur)}</b></div>
   <div style="min-width:0"><div class="vt">${esc(v.t)}</div><div class="small muted">${esc(v.ch)}</div>
-  <div class="tags"><span class="tag g">🟢 Khuyên xem</span><span class="tag">${v.age[0]}–${v.age[1]} tuổi</span><span class="tag">${v.pace==='cham'?'🐢 Nhịp chậm':'🚶 Nhịp vừa'}</span>${v.inter?'<span class="tag t">🙋 Hỏi – chờ con trả lời</span>':''}${pct!==null?`<span class="tag t">😊 ${pct}% tắt máy vui vẻ (${sc.n})</span>`:''}</div>
+  <div class="tags">${inPlan&&v.id===planCore?`<span class="tag core">⭐ Bài ôn · lần ${viewsOf(kid(),v.id).length+1}</span>`:'<span class="tag g">🟢 Khuyên xem</span>'}<span class="tag">${v.age[0]}–${v.age[1]} tuổi</span><span class="tag">${v.pace==='cham'?'🐢 Nhịp chậm':'🚶 Nhịp vừa'}</span>${v.inter?'<span class="tag t">🙋 Hỏi – chờ con trả lời</span>':''}${pct!==null?`<span class="tag t">😊 ${pct}% tắt máy vui vẻ (${sc.n})</span>`:''}</div>
   ${inPlan?`<div class="vact"><button class="mini" onclick="swapVid(${i})">Đổi video khác</button><button class="mini red" onclick="blockVid('${v.id}')">🚫 Chặn</button></div>`:''}
   </div></div>`;
 }
@@ -268,13 +329,15 @@ function swapVid(i){const k=kid(),cur=plan[i];const ids=plan.map(v=>v.id);
 function blockVid(id){if(!confirm('Chặn video này? Con sẽ không được xem nữa.'))return;S.blocked.push(id);save();send({type:'block',id,title:(byId[id]||{}).t});plan=plan.filter(v=>v.id!==id);render()}
 
 function libView(){
-  const k=kid(); const list=V.filter(v=>libCat==='all'||v.cat.includes(libCat)||v.sit.includes(libCat));
+  const k=kid(); const list=V.filter(v=>libCat==='all'||v.cat.includes(libCat)||v.sit.includes(libCat)||v.lop.includes(libCat));
   return `<h2>Thư viện đã duyệt · ${V.length} video</h2>
   <p class="small muted" style="margin-top:-4px">Mỗi video đều có người lớn chấm: tuổi, nhịp phim, có tương tác không. Điểm “tắt máy vui vẻ” lấy từ đánh giá của bố mẹ.</p>
   <div class="chips"><button class="chip ${libCat==='all'?'on':''}" onclick="libCat='all';render()">Tất cả</button>
   ${Object.entries(CATS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
   <div class="lbl">Theo tình huống</div>
   <div class="chips">${Object.entries(SITS).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
+  <div class="lbl">Theo chủ đề ở lớp</div>
+  <div class="chips">${Object.entries(LOP).map(([c,t])=>`<button class="chip ${libCat===c?'on':''}" onclick="libCat='${c}';render()">${t}</button>`).join('')}</div>
   <div class="card">${list.map(v=>vidRow(v,false)+`<div class="small" style="margin:-4px 0 8px 130px;color:#16877a">💬 ${esc(v.ask)}</div>`).join('')||'<p class="muted">Chưa có video.</p>'}</div>
   ${S.blocked.length?`<p class="small muted">Đã chặn ${S.blocked.length} video. <a href="#" onclick="S.blocked=[];save();render();return false">Bỏ chặn tất cả</a></p>`:''}`;
 }
@@ -296,6 +359,9 @@ function reportView(){
   <div class="card"><b>Con đã xem gì</b>
     ${Object.keys(catSec).length?Object.entries(CATS).filter(([c])=>catSec[c]).map(([c,t])=>`<div class="hbar"><span>${t}</span><div class="bar"><i style="width:${catSec[c]/maxC*100}%;background:var(--pri)"></i></div><span class="small muted">${Math.round(catSec[c]/60)}p</span></div>`).join(''):'<p class="small muted">Chưa có buổi xem nào.</p>'}
   </div>
+  ${(()=>{const m=S.core[k.id]||{};const rows=Object.entries(m).filter(([,c])=>byId[c.id]);
+    return rows.length?`<div class="card"><b>⭐ Bài ôn của con</b><p class="small muted" style="margin:4px 0 6px">Xem cách ngày, tối đa 5 lần. Khi bố mẹ chạm 👍 “thuộc rồi”, app chuyển sang bài mới cùng chủ đề.</p>
+    ${rows.map(([f,c])=>{const n=viewsOf(k,c.id).length;return `<div class="row between small" style="padding:7px 0;border-top:1px solid var(--line)"><span style="min-width:0"><b>${esc(byId[c.id].t)}</b><br><span class="muted">${focusName(f)}</span></span><span style="flex:none">${c.done?'✅ Đã thuộc':'👁 '+n+'/5 lần'}</span></div>`}).join('')}</div>`:''})()}
   ${top.length?`<div class="card"><b>Video con tắt máy vui vẻ nhất</b>${top.map(([id,o])=>byId[id]?vidRow(byId[id],false):'').join('')}</div>`:''}
   <div class="card"><b>Các buổi gần đây</b>
   ${S.sessions.filter(s=>s.kid===k.id).slice(-8).reverse().map(s=>`<div class="row between small" style="padding:7px 0;border-top:1px solid var(--line)"><span>${new Date(s.at).toLocaleString('vi-VN',{weekday:'short',hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'})}</span><span>${s.videos.length} video · ${Math.round(s.watched/60)}p</span><span style="font-size:18px">${{vui:'😊',tiec:'😐',anvai:'😫'}[s.mood]||'–'}</span></div>`).join('')||'<p class="small muted">Chưa có.</p>'}
@@ -306,9 +372,15 @@ function settingsView(){
   const k=kid();
   return `<h2>Hồ sơ của bé</h2><div class="card">
    <div class="lbl" style="margin-top:0">Tên gọi</div><input value="${esc(k.name)}" onchange="kid().name=this.value;save();render()">
-   <div class="lbl">Tuổi (tháng)</div><input type="number" value="${k.months}" onchange="kid().months=+this.value;save();plan=[];render()">
-   <div class="lbl">Mục tiêu (chọn 1–3)</div>
+   <div class="lbl">Tuổi của bé</div>
+   <div class="chips">${AGES.map(([m,t])=>`<button class="chip ${k.months===m?'on':''}" onclick="setAge(${m})">${t}</button>`).join('')}</div>
+   <input class="agein" type="number" inputmode="numeric" placeholder="hoặc gõ số tháng" value="${AGES.some(a=>a[0]===k.months)?'':k.months}" onchange="setAge(+this.value)">
+   <div class="lbl">Mục tiêu của bố mẹ (chọn 1–3)</div>
    <div class="chips">${Object.entries(CATS).map(([c,t])=>`<button class="chip ${k.goals.includes(c)?'on':''}" onclick="toggleGoal('${c}')">${t}</button>`).join('')}</div>
+   <p class="small muted" style="margin:8px 0 0">Mỗi buổi chỉ học 1 mục tiêu, app luân phiên theo ngày để con không bị loãng.</p>
+   <div class="lbl">Ở lớp con đang học chủ đề gì?</div>
+   <div class="chips">${Object.entries(LOP).map(([c,t])=>{const n=eligible(k).filter(v=>v.lop.includes(c)).length;return `<button class="chip ${k.lop===c?'on':''}" onclick="setLop('${c}')">${t} <span class="muted small">${n}</span></button>`}).join('')}</div>
+   <p class="small muted" style="margin:8px 0 0">Hỏi cô giáo hoặc xem bảng chủ đề tuần ở lớp. Chọn rồi thì app xen kẽ: 1 ngày xem đúng chủ đề ở lớp, 1 ngày theo mục tiêu của bố mẹ. Con học ở lớp, về nhà gặp lại sẽ nhớ lâu hơn. Chạm lần nữa để bỏ chọn.</p>
   </div>
   <h2>Giọng bố mẹ lúc tạm biệt</h2><div class="card">
    <p class="small muted" style="margin-top:0">Ghi âm một câu ngắn, ví dụ: “${esc(k.name)} ơi, hết giờ rồi, bố đợi con đi tắm nhé!”. Lúc hết giờ app sẽ phát giọng của anh/chị thay cho giọng máy.</p>
@@ -353,14 +425,22 @@ function startKid(){
     <div class="stage"><div id="ytwrap"><div id="yt"></div></div>
       <div class="shield" id="shield" onclick="togglePause()"><div class="bigplay" id="bigplay">▶️</div></div>
       <div id="toastbox"></div><div class="lastchip hide" id="lastchip">⭐ Video cuối cùng</div>
+      <button class="fsbtn" onclick="event.stopPropagation();goLandscape(true)">⛶ Xoay ngang</button>
       <button class="parentexit" onclick="event.stopPropagation();parentExit()">Bố mẹ dừng</button>
     </div></div>`;
-  try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}catch(e){}
+  goLandscape(false);
   player=new YT.Player('yt',{host:'https://www.youtube-nocookie.com',videoId:plan[0].id,
     playerVars:{controls:0,rel:0,modestbranding:1,disablekb:1,fs:0,playsinline:1,iv_load_policy:3,autoplay:1},
     events:{onStateChange:onState,onReady:e=>{e.target.playVideo()}}});
   lastTick=Date.now(); timer=setInterval(tick,500);
   markLast();
+}
+// Toàn màn hình + khoá ngang (Android). iPhone không cho trang web tự xoay: nhắc bố mẹ xoay máy.
+function goLandscape(askedByUser){
+  const el=document.documentElement, rq=el.requestFullscreen||el.webkitRequestFullscreen;
+  const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{})}catch(e){}};
+  if(!rq){if(askedByUser)toast('📱','Xoay ngang điện thoại nhé');return}
+  try{const p=rq.call(el);if(p&&p.then)p.then(lock).catch(()=>{});else lock()}catch(e){}
 }
 function onState(e){
   const bp=$('#bigplay'); if(!bp)return;
@@ -397,7 +477,10 @@ function cleanupPlayer(){clearInterval(timer);try{player&&player.destroy()}catch
 function parentExit(){if(!confirm('Dừng buổi xem bây giờ?'))return;endSession()}
 function endSession(){
   const k=kid(); cleanupPlayer();
-  session={kid:k.id,at:Date.now(),videos:plan.slice(0,Math.min(idx+1,plan.length)).map(v=>v.id),watched:played,mood:null,imitate:null};
+  session={kid:k.id,at:Date.now(),videos:plan.slice(0,Math.min(idx+1,plan.length)).map(v=>v.id),watched:played,mood:null,imitate:null,focus:situation?null:planFocus,core:null};
+  session.videos.forEach(id=>addView(k,id));
+  if(planCore&&session.videos.includes(planCore))session.core=planCore;
+  save();
   const [ni,nt]=NEXTS[k.next];
   $('#overlay').innerHTML=`<div class="full bye"><div class="bear">🐻</div><h1>Tạm biệt ${esc(k.name)}!</h1><p>Hẹn gặp lại ngày mai nhé</p>
     <div class="nextcard"><span>${ni}</span>${nt}</div>
@@ -407,6 +490,7 @@ function endSession(){
 }
 function kidOff(){
   speechSynthesis.cancel();
+  try{screen.orientation&&screen.orientation.unlock&&screen.orientation.unlock()}catch(e){}
   try{document.fullscreenElement&&document.exitFullscreen()}catch(e){}
   const a=2+(Math.random()*7|0),b=3+(Math.random()*6|0);
   window._gate=a+b;
@@ -415,8 +499,13 @@ function kidOff(){
    <input type="number" inputmode="numeric" id="gatein" oninput="if(+this.value===window._gate)afterGate()"></div></div>`;
 }
 function afterGate(){
-  const n=S.sessions.length+1, alt=n%5===0;
-  $('#overlay').innerHTML=`<div class="full rate">${alt?`
+  const n=S.sessions.length+1, k=kid();
+  // từ lần ôn thứ 3, hỏi bài ôn đã thuộc chưa (vẫn chỉ 1 chạm)
+  const cv=session.core&&viewsOf(k,session.core).length>=3?byId[session.core]:null;
+  const alt=!cv&&n%5===0;
+  $('#overlay').innerHTML=`<div class="full rate">${cv?`
+    <h1>Con thuộc bài ⭐ “${esc(cv.t)}” chưa?</h1><p class="muted">Hát theo, nói theo, hoặc đoán trước được đoạn sau</p>
+    <div class="faces"><button onclick="rate(null,'yes')">👍<small>Thuộc rồi</small></button><button onclick="rate(null,'no')">👎<small>Chưa</small></button></div>`:alt?`
     <h1>Con có nhắc lại gì từ video không?</h1><p class="muted">Một từ tiếng Anh, một câu hát, một hành động…</p>
     <div class="faces"><button onclick="rate(null,'yes')">👍<small>Có</small></button><button onclick="rate(null,'no')">👎<small>Chưa</small></button></div>`:`
     <h1>Lúc tắt, con thế nào?</h1>
@@ -424,12 +513,15 @@ function afterGate(){
     <button class="skip" onclick="rate(null,null)">Bỏ qua</button></div>`;
 }
 function rate(mood,imit){
-  session.mood=mood;session.imitate=imit||null;S.sessions.push(session);save();
+  session.mood=mood;session.imitate=imit||null;S.sessions.push(session);
+  let mastered=false;
+  if(session.core&&imit==='yes'&&session.focus){const c=(S.core[session.kid]||{})[session.focus];if(c&&c.id===session.core){c.done=true;mastered=true}}
+  save();
   send({type:'session',videos:session.videos,watched:session.watched,mood,imitate:imit||null,minutes:kid().minutes,situation:situation||''}).then(()=>setTimeout(loadGlobal,1500));
   if(G&&G.videos&&mood){session.videos.forEach(id=>{const o=G.videos[id]||(G.videos[id]={n:0,good:0,bad:0,imit:0});o.n++;if(mood==='vui')o.good++;if(mood==='anvai')o.bad++})}
   const k=kid(),ws=weekSessions(k).filter(s=>s.mood),h=ws.filter(s=>s.mood==='vui').length;
   const v=byId[session.videos[0]];
-  const line=mood==='vui'?`Tuyệt! Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần 🎉`:mood==='anvai'?`Không sao, lần sau app sẽ đổi sang video nhịp chậm hơn ở cuối buổi.`:ws.length?`Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần.`:'Cảm ơn anh/chị!';
+  const line=mastered?'Giỏi quá! Con đã thuộc bài ⭐. Lần sau app đổi sang bài mới cùng chủ đề 🎉':mood==='vui'?`Tuyệt! Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần 🎉`:mood==='anvai'?`Không sao, lần sau app sẽ đổi sang video nhịp chậm hơn ở cuối buổi.`:ws.length?`Tuần này con vui vẻ tắt máy ${h}/${ws.length} lần.`:'Cảm ơn anh/chị!';
   $('#overlay').innerHTML=`<div class="full rate thanks"><div class="big">${mood==='anvai'?'🤗':'🎉'}</div><h1 style="font-size:20px;max-width:340px">${line}</h1>
    ${v?`<div class="askbox"><div class="small muted">Hôm nay con xem “${esc(v.t)}”</div><b>💬 ${esc(v.ask)}</b></div>`:''}
    <button class="btn" style="max-width:340px" onclick="$('#overlay').innerHTML='';plan=buildPlan(kid());situation=null;render()">Về trang bố mẹ</button></div>`;
