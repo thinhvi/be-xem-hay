@@ -232,12 +232,28 @@ function eligible(k){
 }
 function recentIds(k,n=3){return S.sessions.filter(s=>s.kid===k.id).slice(-n).flatMap(s=>s.videos)}
 function rank(list,k){
-  const sc=scores(),rec=recentIds(k);
+  const sc=scores(),rec=recentIds(k),st=styleOf(k);
   return shuffle(list.slice()).sort((a,b)=>val(b)-val(a));
   function val(v){const o=sc[v.id];let x=0;if(o&&o.n)x+=(o.good-o.bad*1.5)/o.n;if(rec.includes(v.id))x-=1.2;if(v.inter&&years(k)<4)x+=.3;
-    // từ 3 tuổi: ưu tiên tập trọn vẹn 6–16 phút, ít chuyển cảnh hơn ghép nhiều clip ngắn
-    if(years(k)>=3&&v.dur>=360)x+=.5; if(years(k)<3&&v.dur>600)x-=.4; return x}
+    // theo kiểu buổi xem của bé: ưu tiên bài ngắn hoặc tập dài
+    return x+lenPref(st,v)}
 }
+/* ---------- Kiểu buổi xem: nhiều bài ngắn / ít tập dài / tự động ---------- */
+const STYLES={auto:'✨ Tự động',ngan:'🎵 Nhiều bài ngắn',dai:'📺 Ít tập dài'};
+function lenPref(st,v){
+  if(st==='ngan')return v.dur<=240?.6:v.dur>480?-.8:0;
+  if(st==='dai')return v.dur>=360?.6:v.dur<180?-.5:0;
+  return 0}
+// Tự động: so tỉ lệ "tắt máy vui vẻ" giữa buổi nhiều bài ngắn và buổi có tập dài
+function autoStats(k){const r={ngan:[0,0],dai:[0,0]};
+  S.sessions.filter(s=>s.kid===k.id&&s.mood).forEach(s=>{const vs=s.videos.map(id=>byId[id]).filter(Boolean);if(!vs.length)return;
+    const avg=vs.reduce((a,v)=>a+v.dur,0)/vs.length,g=avg<240?'ngan':'dai';r[g][1]++;if(s.mood==='vui')r[g][0]++});
+  return r}
+function styleOf(k){const st=k.style||'auto';if(st!=='auto')return st;
+  const r=autoStats(k);
+  if(r.ngan[1]>=3&&r.dai[1]>=3){const a=r.ngan[0]/r.ngan[1],b=r.dai[0]/r.dai[1];if(Math.abs(a-b)>=.15)return a>b?'ngan':'dai'}
+  return years(k)>=3?'dai':'ngan'}  // chưa đủ dữ liệu: dưới 3 tuổi bài ngắn, từ 3 tuổi tập dài
+function setStyle(x){kid().style=x;save();plan=[];render()}
 let planCore=null, planFocus=null, planKey=null;
 function buildPlan(k){
   const limit=k.minutes*60, pool=eligible(k), out=[];let total=0;
@@ -408,6 +424,11 @@ function settingsView(){
    <div class="lbl">Mục tiêu của bố mẹ (chọn 1–3)</div>
    <div class="chips">${Object.entries(CATS).map(([c,t])=>`<button class="chip ${k.goals.includes(c)?'on':''}" onclick="toggleGoal('${c}')">${t}</button>`).join('')}</div>
    <p class="small muted" style="margin:8px 0 0">Mỗi buổi chỉ học 1 mục tiêu, app luân phiên theo ngày để con không bị loãng.</p>
+   <div class="lbl">Kiểu buổi xem</div>
+   <div class="chips">${Object.entries(STYLES).map(([x,t])=>`<button class="chip ${(k.style||'auto')===x?'on':''}" onclick="setStyle('${x}')">${t}</button>`).join('')}</div>
+   <p class="small muted" style="margin:8px 0 0">${(k.style||'auto')==='auto'?(()=>{const r=autoStats(k),cur=styleOf(k);const enough=r.ngan[1]>=3&&r.dai[1]>=3;
+      return `App tự chọn theo câu “Lúc tắt, con thế nào?”: kiểu nào con tắt máy vui vẻ hơn thì nghiêng về kiểu đó. Hiện đang dùng: <b>${STYLES[cur]}</b>${enough?` (bài ngắn: vui ${r.ngan[0]}/${r.ngan[1]} buổi, tập dài: vui ${r.dai[0]}/${r.dai[1]} buổi)`:` vì chưa đủ dữ liệu (cần mỗi kiểu ít nhất 3 buổi có đánh giá)`}.`})()
+     :(k.style==='ngan'?'Bài hát 1–4 phút, con hát theo và nói theo được ngay.':'1–2 tập 7–15 phút có câu chuyện liền mạch, ít lần chuyển bài.')}</p>
    <div class="lbl">Ở lớp con đang học chủ đề gì?</div>
    <div class="chips">${Object.entries(LOP).map(([c,t])=>{const n=eligible(k).filter(v=>v.lop.includes(c)).length;return `<button class="chip ${k.lop===c?'on':''}" onclick="setLop('${c}')">${t} <span class="muted small">${n}</span></button>`}).join('')}</div>
    <p class="small muted" style="margin:8px 0 0">Hỏi cô giáo hoặc xem bảng chủ đề tuần ở lớp. Chọn rồi thì app xen kẽ: 1 ngày xem đúng chủ đề ở lớp, 1 ngày theo mục tiêu của bố mẹ. Con học ở lớp, về nhà gặp lại sẽ nhớ lâu hơn. Chạm lần nữa để bỏ chọn.</p>
