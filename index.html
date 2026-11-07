@@ -142,7 +142,7 @@ select,input{font:inherit;padding:10px 12px;border-radius:12px;border:1.5px soli
 </div></nav>
 <div id="overlay"></div>
 
-<script src="data.js"></script>
+<script src="data.js?v=3"></script>
 <script>
 /* ---------- Danh mục ---------- */
 const CATS={en:'🔤 Tiếng Anh',math:'🔢 Toán & tư duy',explore:'🔭 Khám phá',feel:'💛 Cảm xúc & tính cách',habit:'🪥 Thói quen & tự lập',move:'🤸 Vận động',story:'📚 Truyện & sáng tạo'};
@@ -277,6 +277,7 @@ function ageText(k){return k.months<24?k.months+' tháng':Math.floor(k.months/12
 function pickKid(id){S.active=id;save();plan=[];showPlan=false;situation=null;render()}
 function addKid(){const name=prompt('Tên gọi của bé?');if(!name)return;
   const k={id:'k'+Date.now(),name,months:36,goals:['en','feel'],minutes:20,next:'tam'};S.kids.push(k);S.active=k.id;save();plan=[];tab='settings';render();scrollTo(0,0)}
+function ageChips(k){return `<div class="chips">${AGES.map(([m,t])=>`<button class="chip ${k.months===m?'on':''}" onclick="setAge(${m})">${t}</button>`).join('')}</div>`}
 function setAge(m){if(!m||m<1)return;kid().months=m;save();plan=[];render()}
 function setLop(l){const k=kid();k.lop=k.lop===l?null:l;k.pick=null;save();plan=[];render()}
 function pickFocus(f){const k=kid();k.pick={day:today(),f};situation=null;save();plan=buildPlan(k);render()}
@@ -286,12 +287,14 @@ function homeView(){
   if(k.months<18) return `<div class="warnbox blocked18"><div class="ic">👶</div><h2 style="margin-top:6px">${esc(k.name)} chưa nên xem video</h2>
     <p>Hội Nhi khoa Mỹ và WHO khuyên trẻ dưới 18 tháng <b>không xem màn hình</b>, trừ gọi video với người thân.</p>
     <p class="small muted" style="text-align:left">Thay vào đó bố mẹ thử:<br>• Gọi video với ông bà<br>• Đọc sách tranh, chỉ và gọi tên con vật<br>• Chơi ú òa, hát và vỗ tay cùng con</p>
-    <p class="small muted">App sẽ tự mở khi bé đủ 18 tháng.</p></div>`;
+    <p class="small muted">App sẽ tự mở khi bé đủ 18 tháng.</p>
+    <div class="lbl" style="text-align:left">Bé đã lớn hơn? Chọn lại tuổi</div>${ageChips(k)}</div>`;
   if(!plan.length) plan=buildPlan(k);
   const [ni,nt]=NEXTS[k.next];
   return `
   <div class="card">
-    <div class="lbl" style="margin-top:0">Hôm nay con xem bao lâu?</div>
+    <div class="lbl" style="margin-top:0">${esc(k.name)} mấy tuổi?</div>${ageChips(k)}
+    <div class="lbl">Hôm nay con xem bao lâu?</div>
     <div class="chips">${[10,15,20,30].map(m=>`<button class="chip ${k.minutes===m?'on':''}" onclick="setMin(${m})">${m} phút</button>`).join('')}</div>
     <div class="lbl">Xem xong con làm gì?</div>
     <div class="chips">${Object.entries(NEXTS).map(([key,[i,,s]])=>`<button class="chip ${k.next===key?'on':''}" onclick="setNext('${key}')">${i} ${s}</button>`).join('')}</div>
